@@ -4,23 +4,31 @@ import com.carnote.model.entity.Vehicle;
 import com.carnote.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Map;
 
 @Controller
-public class IndexController {
+public class VehicleController {
 
     @Autowired
     VehicleService vehicleService;
 
-    @RequestMapping(value = { "/", "/index" }, method = RequestMethod.GET)
+    @RequestMapping(value = {"/newVehicle" }, method = RequestMethod.GET)
     public String indexPage(Map<String, Object> map) {
 
-
         map.put("vehicle", new Vehicle());
-        map.put("vehicleList", vehicleService.getAllVehicles());
-        return "index";
+        return "newVehicle";
+    }
+
+    @RequestMapping(value="/addVehicle", method= RequestMethod.POST)
+    public String doActions(@ModelAttribute Vehicle vehicle) {
+
+        vehicleService.add(vehicle);
+
+        return "redirect:/index";
     }
 }
