@@ -4,6 +4,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import java.util.Calendar;
 
 @Entity
 @Table(name = "VEHICLES")
@@ -19,24 +22,31 @@ public class Vehicle {
     private String model;
 
     @Column
+    @Min(value = 1900, message = "Improper year!")
+    @Max(value = 2040, message = "Improper year!")
     private int year;
 
     @Column
     private int ftype;
 
     @Column
+    @Min(value = 0, message = "Improper value!")
     private int cap1;
 
     @Column
+    @Min(value = 0, message = "Improper value!")
     private int cap2;
 
     @Column
+    @Min(value = 0, message = "Improper value!")
     private int level1;
 
     @Column
+    @Min(value = 0, message = "Improper value!")
     private int level2;
 
     @Column
+    @Min(value = 0, message = "Improper value!")
     private int milage;
 
     public Vehicle() {

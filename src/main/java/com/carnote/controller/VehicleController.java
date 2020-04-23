@@ -4,11 +4,13 @@ import com.carnote.model.entity.Vehicle;
 import com.carnote.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.validation.Valid;
 import java.util.Map;
 
 @Controller
@@ -25,10 +27,17 @@ public class VehicleController {
     }
 
     @RequestMapping(value="/addVehicle", method= RequestMethod.POST)
-    public String doActions(@ModelAttribute Vehicle vehicle) {
+    public String doActions(@Valid @ModelAttribute Vehicle vehicle, BindingResult br) {
 
-        vehicleService.add(vehicle);
+        if (br.hasErrors()) {
+            return "newVehicle";
+        }
 
-        return "redirect:/index";
+        else {
+
+            vehicleService.add(vehicle);
+
+            return "redirect:/index";
+        }
     }
 }

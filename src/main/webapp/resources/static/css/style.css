@@ -83,3 +83,9 @@ body {
 #lpg-cap, #lpg-lev, #lpg-spacer {
     display: none;
 }
+
+#errorMessage {
+    display: none;
+    color: red;
+    margin-bottom: 30px;
+}

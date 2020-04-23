@@ -34,10 +34,14 @@
 
             <div class="row">
                 <div class="col-sm-12 form-wrapper">
-                    <form:form action="addVehicle" method="post" modelAttribute="vehicle">
+                    <form:form name="vehicleForm" action="addVehicle" method="post" onsubmit="return validateForm()" modelAttribute="vehicle">
+
+                        <div id="errorMessage">
+                            <p id="message"></p>
+                        </div>
 
                         <div class="group">
-                            <form:input type="text" path="brand" required="required" maxlength="30" />
+                            <form:input type="text" name="brand" path="brand" required="required" maxlength="30" />
                             <span class="highlight"></span>
                             <span class="bar"></span>
                             <label>Brand</label>
@@ -51,7 +55,7 @@
                         </div>
 
                         <div class="group">
-                            <form:input type="text" path="year" required="required" />
+                            <form:input type="text" name="year" path="year" required="required" />
                             <span class="highlight"></span>
                             <span class="bar"></span>
                             <label>Year</label>
@@ -67,7 +71,7 @@
                         </div>
 
                         <div class="group">
-                            <form:input type="text" path="cap1" required="required" onchange="mainTankCap(this.value);" />
+                            <form:input type="text" name="cap1" path="cap1" required="required" onchange="mainTankCap(this.value);" />
                             <span class="highlight"></span>
                             <span class="bar"></span>
                             <label>Main fuel tank capacity</label>
@@ -83,7 +87,7 @@
                         <div class="input-spacer" id="lpg-spacer"></div>
 
                         <div class="group" id="lpg-cap">
-                            <form:input type="text" path="cap2" onchange="secTankCap(this.value);" />
+                            <form:input type="text" name="cap2" path="cap2" onchange="secTankCap(this.value);" />
                             <span class="highlight"></span>
                             <span class="bar"></span>
                             <label>LPG tank capacity</label>
@@ -99,7 +103,7 @@
                         <div class="input-spacer"></div>
 
                         <div class="group">
-                            <form:input type="text" path="milage" required="required" />
+                            <form:input type="text" name="milage" path="milage" required="required" />
                             <span class="highlight"></span>
                             <span class="bar"></span>
                             <label>Milage</label>
