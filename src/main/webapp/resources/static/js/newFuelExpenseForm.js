@@ -1,7 +1,8 @@
 function validateForm() {
 
-    var price = parseFloat(document.forms["expenseForm"]["price"].value);
-    var milage = parseInt(document.forms["expenseForm"]["milage"].value, 10);
+    var price = parseFloat(document.forms["fuelExpenseForm"]["price"].value);
+    var milage = parseInt(document.forms["fuelExpenseForm"]["milage"].value, 10);
+    var litres = parseFloat(document.forms["fuelExpenseForm"]["litres"].value);
 
     var letters = /^[A-Za-z]+$/;
 
@@ -24,6 +25,18 @@ function validateForm() {
 
     if(!isNaN(price)) {
         if (price <= 0) {
+            showErrorMessage();
+            return false;
+        }
+    }
+
+    else {
+        showErrorMessage();
+        return false;
+    }
+
+    if(!isNaN(litres)) {
+        if (litres < 0) {
             showErrorMessage();
             return false;
         }

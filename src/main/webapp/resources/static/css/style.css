@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Trade+Winds&display=swap');
 @import url("https://fonts.googleapis.com/css?family=Raleway");
+@import url('https://fonts.googleapis.com/css2?family=Jost&display=swap');
 
 body {
     background: url("../img/bg.jpg") no-repeat center center fixed;
@@ -51,6 +52,8 @@ body {
     -webkit-box-shadow: 0px 7px 19px 0px rgba(0,0,0,0.61);
     -moz-box-shadow: 0px 7px 19px 0px rgba(0,0,0,0.61);
     box-shadow: 0px 7px 19px 0px rgba(0,0,0,0.61);
+
+    margin-bottom: 30px;
 }
 
 .table-row{
@@ -101,6 +104,20 @@ body {
 
 .bottom-zero {
     bottom: 0;
+}
+
+.expenses-details {
+    background-color: rgba(0, 0, 0, 0.85);
+
+    -webkit-box-shadow: 0px 7px 19px 0px rgba(0,0,0,0.61);
+    -moz-box-shadow: 0px 7px 19px 0px rgba(0,0,0,0.61);
+    box-shadow: 0px 7px 19px 0px rgba(0,0,0,0.61);
+
+    margin-bottom: 30px;
+    padding: 15px;
+
+    font-family: 'Jost', sans-serif;
+    color: rgba(255, 255, 255, 0.80);
 }
 
 #lpg-cap, #lpg-lev, #lpg-spacer {

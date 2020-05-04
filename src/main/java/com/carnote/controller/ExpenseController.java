@@ -35,6 +35,24 @@ public class ExpenseController {
     @Autowired
     ExpTypeService expTypeService;
 
+    @RequestMapping(value="/expense", method = RequestMethod.GET)
+    public String expensePage(Map<String, Object> map, @RequestParam(value = "eId") Integer expenseId) {
+
+        Expense expense = expenseService.getExpense(expenseId);
+
+        map.put("expense", expense);
+        return "expense";
+    }
+
+    @RequestMapping(value="/fuelExpense", method = RequestMethod.GET)
+    public String fuelExpensePage(Map<String, Object> map, @RequestParam(value = "eId") Integer expenseId) {
+
+        FuelExpense expense = fuelExpenseService.getFuelExpense(expenseId);
+
+        map.put("expense", expense);
+        return "fuelExpense";
+    }
+
     @RequestMapping(value="/newExpense", method = RequestMethod.GET)
     public String newExpensePage(Map<String, Object> map, @RequestParam(value = "vId") Integer vehicleId) {
 
@@ -65,13 +83,23 @@ public class ExpenseController {
         return "redirect:/vehicle?vId="+vehicleId;
     }
 
+    @RequestMapping(value="/deleteFuelExpense", method = RequestMethod.GET)
+    public String deleteFuelExpense(@RequestParam(value = "eId") Integer expenseId) {
+
+        int vehicleId = fuelExpenseService.getFuelExpense(expenseId).getCar().getId();
+
+        fuelExpenseService.delete(expenseId);
+
+        return "redirect:/vehicle?vId="+vehicleId;
+    }
+
     @RequestMapping(value="/addExpense", method= RequestMethod.POST)
     public String addExpense(@Valid @ModelAttribute ExpenseFormViewModel expense, BindingResult br) {
 
         int id = expense.getCarId();
 
         if (br.hasErrors()) {
-            return "newExpense?vId="+id;
+            return "redirect:/newExpense?vId="+id;
         }
 
         else {
@@ -88,10 +116,10 @@ public class ExpenseController {
     @RequestMapping(value="/updateExpense", method= RequestMethod.POST)
     public String updateExpense(@Valid @ModelAttribute ExpenseFormViewModel expense, BindingResult br) {
 
-        int id = expense.getCarId();
+        int id = expense.getId();
 
         if (br.hasErrors()) {
-            return "newExpense?vId="+id;
+            return "redirect:/editExpense?eId="+id;
         }
 
         else {
@@ -103,15 +131,6 @@ public class ExpenseController {
 
             return "redirect:/vehicle?vId="+id;
         }
-    }
-
-    @RequestMapping(value="/expense", method = RequestMethod.GET)
-    public String expensePage(Map<String, Object> map, @RequestParam(value = "eId") Integer expenseId) {
-
-        Expense expense = expenseService.getExpense(expenseId);
-
-        map.put("expense", expense);
-        return "expense";
     }
 
     @RequestMapping(value="/newFuelExpense", method = RequestMethod.GET)
@@ -129,9 +148,10 @@ public class ExpenseController {
     public String addFuelExpense(@Valid @ModelAttribute FuelExpenseFormViewModel expense, BindingResult br) {
 
         int id = expense.getCarId();
+        int ft = expense.getFtype();
 
         if (br.hasErrors()) {
-            return "newExpense?vId="+id;
+            return "redirect:/newFuelExpense?vId="+id+"&ft="+ft;
         }
 
         else {
@@ -142,6 +162,37 @@ public class ExpenseController {
             fuelExpenseService.add(expenseToAdd);
 
             return "redirect:/vehicle?vId="+id;
+        }
+    }
+
+    @RequestMapping(value="/editFuelExpense", method = RequestMethod.GET)
+    public String editFuelExpensePage(Map<String, Object> map, @RequestParam(value = "eId") Integer expenseId) {
+
+        FuelExpense expense = fuelExpenseService.getFuelExpense(expenseId);
+
+        map.put("oldExpense", expense);
+        map.put("expense", new FuelExpenseFormViewModel());
+        return "editFuelExpense";
+    }
+
+    @RequestMapping(value="/updateFuelExpense", method= RequestMethod.POST)
+    public String updateFuelExpense(@Valid @ModelAttribute FuelExpenseFormViewModel expense, BindingResult br) {
+
+        int exId = expense.getId();
+        int vId = expense.getCarId();
+
+        if (br.hasErrors()) {
+            return "redirect:/editFuelExpense?eId="+exId;
+        }
+
+        else {
+
+            FuelExpense expenseToAdd = new FuelExpense(expense.getId(), vehicleService.getVehicle(expense.getCarId()), expense.getName(), expTypeService.getExpType(expense.getTypeId()),
+                    expense.getFtype(), expense.getDate(), expense.getMilage(), expense.getPrice(), expense.getLitres(), expense.getLevel());
+
+            fuelExpenseService.edit(expenseToAdd);
+
+            return "redirect:/vehicle?vId="+vId;
         }
     }
 }

@@ -41,12 +41,25 @@ public class FuelExpense {
 
     @Column
     @Min(value = 0, message = "Improper value!")
-    private float level;
+    private int level;
 
     public FuelExpense() {
     }
 
-    public FuelExpense(Vehicle car, String name, ExpType type, int ftype, String date, int milage, float price, float litres, float level) {
+    public FuelExpense(int id, Vehicle car, String name, ExpType type, int ftype, String date, int milage, float price, float litres, int level) {
+        this.id = id;
+        this.car = car;
+        this.name = name;
+        this.ftype = ftype;
+        this.type = type;
+        this.date = date;
+        this.milage = milage;
+        this.price = price;
+        this.litres = litres;
+        this.level = level;
+    }
+
+    public FuelExpense(Vehicle car, String name, ExpType type, int ftype, String date, int milage, float price, float litres, int level) {
         this.car = car;
         this.name = name;
         this.ftype = ftype;
@@ -130,11 +143,11 @@ public class FuelExpense {
         this.litres = litres;
     }
 
-    public float getLevel() {
+    public int getLevel() {
         return level;
     }
 
-    public void setLevel(float level) {
+    public void setLevel(int level) {
         this.level = level;
     }
 }

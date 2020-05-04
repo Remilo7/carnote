@@ -77,7 +77,7 @@
                         </div>
 
                         <div class="group">
-                            <form:input type="text" name="price" path="price" pattern="(\d+\.\d{1,2})" required="required" />
+                            <form:input type="text" name="price" path="price" onkeyup="addDot(this);" required="required" />
                             <span class="highlight"></span>
                             <span class="bar"></span>
                             <label>Price</label>

@@ -1,6 +1,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 
@@ -19,17 +20,28 @@
 <body>
 
 <div class="container-fluid">
+
     <div class="row">
         <div class="col-sm-3"></div>
         <div class="col-sm-6">
-
             <div class="row">
                 <div class="col-sm-12">
                     <h1 class="text-center appname">CarNote</h1>
                     <h3 class="text-center pagetitle">${vehicle.brand} ${vehicle.model}</h3>
                 </div>
             </div>
+        </div>
+        <div class="col-sm-3"></div>
+    </div>
 
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="col-sm-12 expenses-details">
+
+            </div>
+        </div>
+
+        <div class="col-sm-6">
             <div class="row">
                 <div class="col-sm-12 table-responsive table-wrapper table-vehicle-wrapper">
 
@@ -49,12 +61,22 @@
 
                             <tbody id="myTable">
                             <c:forEach items="${expenseList}" var="expense">
-                                <tr class="table-row" onclick="window.location='expense?eId=${expense.id}'">
+
+                                <c:choose>
+                                    <c:when test="${expense.type.id==6}">
+                                        <c:set var="expenseURL" value="fuelExpense?eId=${expense.id}" />
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:set var="expenseURL" value="expense?eId=${expense.id}" />
+                                    </c:otherwise>
+                                </c:choose>
+
+                                <tr class="table-row" onclick="window.location='${expenseURL}'">
                                     <td>${expense.name}</td>
                                     <td>${expense.type.name}</td>
                                     <td>${expense.date}</td>
                                     <td>${expense.milage} km</td>
-                                    <td>${expense.price} zł</td>
+                                    <td><fmt:formatNumber type="number" maxFractionDigits="2" value="${expense.price}"/> zł</td>
                                 </tr>
                             </c:forEach>
                             </tbody>
@@ -87,14 +109,44 @@
                     </div>
                 </div>
             </div>
+        </div>
 
+        <div class="col-sm-3">
+            <div class="col-sm-12 expenses-details">
+                <div class="row">
+                    <div class="col-6 text-left">
+                        <h5>Fuel sum:</h5>
+                        <h5>Exploitation:</h5>
+                        <h5>Repairs:</h5>
+                        <h5>MOT:</h5>
+                        <h5>Insurance:</h5>
+                        <h5>Other:</h5>
+                        <br>
+                        <h5>Summary:</h5>
+                    </div>
+                    <div class="col-6 text-right">
+                        <h5><fmt:formatNumber type="number" maxFractionDigits="2" value="${fuel_sum}"/> zł</h5>
+                        <h5><fmt:formatNumber type="number" maxFractionDigits="2" value="${exp_sum}"/> zł</h5>
+                        <h5><fmt:formatNumber type="number" maxFractionDigits="2" value="${rep_sum}"/> zł</h5>
+                        <h5><fmt:formatNumber type="number" maxFractionDigits="2" value="${mot_sum}"/> zł</h5>
+                        <h5><fmt:formatNumber type="number" maxFractionDigits="2" value="${ins_sum}"/> zł</h5>
+                        <h5><fmt:formatNumber type="number" maxFractionDigits="2" value="${oth_sum}"/> zł</h5>
+                        <br>
+                        <h5><fmt:formatNumber type="number" maxFractionDigits="2" value="${sum}"/> zł</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-6">
             <div class="row p-0">
                 <div class="col-sm-12 p-0">
-                    <div class="input-spacer"></div>
                     <a href="index"><button class="btn btn-dark pull-left bottom-zero">Go back</button></a>
                 </div>
             </div>
-
         </div>
         <div class="col-sm-3"></div>
     </div>
