@@ -30,23 +30,23 @@
     right: 0;
     border-top-color: transparent;
     border-left-color: transparent;
-    border-bottom-color: #566473;
-    border-right-color: #566473;
+    border-bottom-color: #313c73;
+    border-right-color: #313c73;
 }
 .button.type1.type1::before {
     top: 0;
     left: 0;
     border-bottom-color: transparent;
     border-right-color: transparent;
-    border-top-color: #566473;
-    border-left-color: #566473;
+    border-top-color: #313c73;
+    border-left-color: #313c73;
 }
 .button.type1.type1:hover:after, .button.type1.type1:hover:before {
     width: 100%;
     height: 100%;
 }
 .button.type2 {
-    color: #16a085;
+    color: #18a04a;
 }
 .button.type2.type2:after, .button.type2.type2:before {
     content: "";
@@ -56,7 +56,7 @@
     left: 0;
     width: 100%;
     height: 2px;
-    background-color: #16a085;
+    background-color: #18a04a;
     transition: all 0.3s ease;
     transform: scale(0.85);
 }
@@ -105,7 +105,7 @@
     height: 100%;
 }
 .button.type4 {
-    color: red;
+    color: #e71500;
 }
 .button.type4::after {
     content: "";
@@ -114,7 +114,7 @@
     height: 2px;
     width: 0;
     left: 0;
-    background-color: red;
+    background-color: #e71500;
     transition: width 0.3s ease-in-out;
 }
 .button.type4::after {

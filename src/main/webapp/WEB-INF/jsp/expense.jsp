@@ -9,11 +9,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>Main page</title>
+    <title>Expense Data</title>
 
     <link href="<c:url value="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />" rel="stylesheet">
     <link href="<c:url value="/resources/static/css/style.css" />" rel="stylesheet">
-    <link href="<c:url value="/resources/static/css/buttons2.css" />" rel="stylesheet">
+    <link href="<c:url value="/resources/static/css/style3.css" />" rel="stylesheet">
+    <link href="<c:url value="/resources/static/css/buttons1.css" />" rel="stylesheet">
 </head>
 <body>
 
@@ -25,38 +26,30 @@
             <div class="row">
                 <div class="col-sm-12">
                     <h1 class="text-center appname">CarNote</h1>
+                    <h3 class="text-center pagetitle">${expense.name}</h3>
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-sm-12 table-responsive table-wrapper">
-                    <table class="table table-index table-hover text-center">
-                        <thead>
-                            <tr>
-                                <th>Brand</th>
-                                <th>Model</th>
-                                <th>Year</th>
-                            </tr>
-                        </thead>
+                <div class="col-sm-12 table-wrapper table-vehicle-wrapper">
 
-                        <tbody>
-                            <c:forEach items="${vehicleList}" var="vehicle">
-                                <tr class="table-row" onclick="window.location='vehicle?vId=${vehicle.id}'">
-                                    <td>${vehicle.brand}</td>
-                                    <td>${vehicle.model}</td>
-                                    <td>${vehicle.year}</td>
-                                </tr>
-                            </c:forEach>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+                    <h5><b>Date: </b>${expense.date}</h5>
+                    <h5><b>Milage: </b>${expense.milage} km</h5>
+                    <h5><b>Price: </b>${expense.price} zł</h5>
+                    <h5><b>Description: </b></h5>
+                    <h5>${expense.description}</h5>
 
-            <div class="row">
-                <div class="col-sm-12 center-button">
-                    <div class="button-row">
-                        <div><a href="newVehicle" title="Add vehicle"></a></div>
+                    <div class="d-flex justify-content-between">
+                        <a href="deleteExpense?eId=${expense.id}"><button class="button type4">Delete</button></a>
+                        <a href="editExpense?eId=${expense.id}"><button class="button type3">Edit</button></a>
                     </div>
+                </div>
+            </div>
+
+            <div class="row p-0">
+                <div class="col-sm-12 p-0">
+                    <div class="input-spacer"></div>
+                    <a href="vehicle?vId=${expense.car.id}"><button class="btn btn-dark pull-left bottom-zero">Go back</button></a>
                 </div>
             </div>
 

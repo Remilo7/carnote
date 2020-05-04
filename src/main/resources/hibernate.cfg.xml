@@ -8,5 +8,8 @@
         <mapping class="com.carnote.model.entity.UserRole" />
         <mapping class="com.carnote.model.entity.UserInfo" />
         <mapping class="com.carnote.model.entity.Vehicle" />
+        <mapping class="com.carnote.model.entity.ExpType" />
+        <mapping class="com.carnote.model.entity.Expense" />
+        <mapping class="com.carnote.model.entity.FuelExpense" />
     </session-factory>
 </hibernate-configuration>

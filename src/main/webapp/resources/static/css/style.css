@@ -29,7 +29,7 @@ body {
     font-family: 'Trade Winds', cursive;
 }
 
-.table {
+.table-index {
     background-color: rgba(255, 255, 255, 0.7);
 
     -webkit-box-shadow: 0px 7px 19px 0px rgba(0,0,0,0.61);
@@ -45,8 +45,27 @@ body {
     padding: 20px;
 }
 
+.table-vehicle-wrapper {
+    background-color: rgba(255, 255, 255, 0.7);
+
+    -webkit-box-shadow: 0px 7px 19px 0px rgba(0,0,0,0.61);
+    -moz-box-shadow: 0px 7px 19px 0px rgba(0,0,0,0.61);
+    box-shadow: 0px 7px 19px 0px rgba(0,0,0,0.61);
+}
+
 .table-row{
     cursor:pointer;
+}
+
+.table-vehicle-search {
+    width: 100%;
+    background-color: transparent;
+    border: none;
+}
+
+.table-autoscroll {
+    max-height: 45vh;
+    overflow-y: auto;
 }
 
 .center-button {
@@ -78,6 +97,10 @@ body {
 
 .input-spacer {
     height: 20px;
+}
+
+.bottom-zero {
+    bottom: 0;
 }
 
 #lpg-cap, #lpg-lev, #lpg-spacer {
