@@ -6,3 +6,11 @@ $(document).ready(function(){
         });
     });
 });
+
+$(document).ready(function(){
+    var right = document.getElementById('right-display').clientHeight.toString();
+    document.getElementById("left-display").style.height = right+"px";
+    console.log(right);
+
+});
+

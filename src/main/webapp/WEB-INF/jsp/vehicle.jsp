@@ -36,8 +36,43 @@
 
     <div class="row">
         <div class="col-sm-3">
-            <div class="col-sm-12 expenses-details">
+            <div class="col-sm-12 expenses-details" id="left-display">
+                <div class="row">
+                    <div class="col-5 text-left">
 
+                        <c:choose>
+                            <c:when test="${vehicle.ftype==2}">
+                                <c:set var="mainFuelName" value="ON" />
+                            </c:when>
+                            <c:otherwise>
+                                <c:set var="mainFuelName" value="PB" />
+                            </c:otherwise>
+                        </c:choose>
+
+                        <h5>AVG ${mainFuelName}:</h5>
+                        <h5>Last ${mainFuelName}:</h5>
+                        <c:if test="${vehicle.ftype==3}">
+                            <br>
+                            <h5>AVG LPG:</h5>
+                            <h5>Last LPG:</h5>
+                        </c:if>
+                        <br>
+                        <h5>Insurance:</h5>
+                        <h5>MOT:</h5>
+                    </div>
+                    <div class="col-7 text-right">
+                        <h5><fmt:formatNumber type="number" maxFractionDigits="2" value="${avgMain}"/> L/100km</h5>
+                        <h5><fmt:formatNumber type="number" maxFractionDigits="2" value="${lastMain}"/> L/100km</h5>
+                        <c:if test="${vehicle.ftype==3}">
+                            <br>
+                            <h5><fmt:formatNumber type="number" maxFractionDigits="2" value="${avgLPG}"/> L/100km</h5>
+                            <h5><fmt:formatNumber type="number" maxFractionDigits="2" value="${lastLPG}"/> L/100km</h5>
+                        </c:if>
+                        <br>
+                        <h5>${insDate}</h5>
+                        <h5>${motDate}</h5>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -95,7 +130,7 @@
                                     <a href="newFuelExpense?vId=${vehicle.id}&ft=2"><button class="button type2">Add refuelling</button></a>
                                 </c:when>
                                 <c:otherwise>
-                                    <button type="button" class="button type2" data-toggle="modal" data-target="#myModal">Add refuelling</button>
+                                    <button type="button" class="button type2" data-toggle="modal" data-target="#fuelModal">Add refuelling</button>
                                 </c:otherwise>
                             </c:choose>
                         </div>
@@ -112,9 +147,9 @@
         </div>
 
         <div class="col-sm-3">
-            <div class="col-sm-12 expenses-details">
+            <div class="col-sm-12 expenses-details" id="right-display">
                 <div class="row">
-                    <div class="col-6 text-left">
+                    <div class="col-5 text-left">
                         <h5>Fuel sum:</h5>
                         <h5>Exploitation:</h5>
                         <h5>Repairs:</h5>
@@ -124,7 +159,7 @@
                         <br>
                         <h5>Summary:</h5>
                     </div>
-                    <div class="col-6 text-right">
+                    <div class="col-7 text-right">
                         <h5><fmt:formatNumber type="number" maxFractionDigits="2" value="${fuel_sum}"/> zł</h5>
                         <h5><fmt:formatNumber type="number" maxFractionDigits="2" value="${exp_sum}"/> zł</h5>
                         <h5><fmt:formatNumber type="number" maxFractionDigits="2" value="${rep_sum}"/> zł</h5>
@@ -143,8 +178,9 @@
         <div class="col-sm-3"></div>
         <div class="col-sm-6">
             <div class="row p-0">
-                <div class="col-sm-12 p-0">
-                    <a href="index"><button class="btn btn-dark pull-left bottom-zero">Go back</button></a>
+                <div class="col-sm-12 d-flex justify-content-between p-0">
+                    <a href="index"><button class="btn btn-dark bottom-zero">Go back</button></a>
+                    <button class="btn btn-danger bottom-zero" data-toggle="modal" data-target="#deleteModal">Delete car</button>
                 </div>
             </div>
         </div>
@@ -152,11 +188,11 @@
     </div>
 </div>
 
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="fuelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Choose tanked fuel</h5>
+                <h5 class="modal-title" id="fuelModalLongTitle">Choose tanked fuel</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -164,6 +200,23 @@
             <div class="modal-body d-flex justify-content-between">
                 <a href="newFuelExpense?vId=${vehicle.id}&ft=3"><button class="btn btn-warning">LPG</button></a>
                 <a href="newFuelExpense?vId=${vehicle.id}&ft=1"><button class="btn btn-success">PB</button></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLongTitle">Confirm deleting your vehicle with all its data</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body d-flex justify-content-between">
+                <button type="button" class="btn btn-dark" data-dismiss="modal">Cancel</button>
+                <a href="deleteVehicle?vId=${vehicle.id}"><button class="btn btn-danger">Delete</button></a>
             </div>
         </div>
     </div>
