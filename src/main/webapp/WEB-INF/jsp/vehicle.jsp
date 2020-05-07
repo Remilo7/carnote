@@ -138,7 +138,7 @@
                         <div class="col-sm-12 input-spacer"></div>
 
                         <div class="d-flex justify-content-between">
-                            <a href="index"><button class="button type1">Import from .xslx</button></a>
+                            <button class="button type1" data-toggle="modal" data-target="#importModal">Import from .xslx</button>
                             <a href="index"><button class="button type1">Export to .xslx</button></a>
                         </div>
                     </div>
@@ -218,6 +218,28 @@
                 <button type="button" class="btn btn-dark" data-dismiss="modal">Cancel</button>
                 <a href="deleteVehicle?vId=${vehicle.id}"><button class="btn btn-danger">Delete</button></a>
             </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="importModalLongTitle">Choose .xlsx file</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form:form method="post" action="importFromExcel" enctype="multipart/form-data">
+                <div class="modal-body">
+                        <input name="vehicleId" type="text" value="${vehicle.id}" class="d-none" />
+                        <input name="file" type="file" />
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success" type="submit">Import</button>
+                </div>
+            </form:form>
         </div>
     </div>
 </div>

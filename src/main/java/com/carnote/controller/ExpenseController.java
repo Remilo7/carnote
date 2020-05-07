@@ -9,15 +9,30 @@ import com.carnote.service.ExpTypeService;
 import com.carnote.service.ExpenseService;
 import com.carnote.service.FuelExpenseService;
 import com.carnote.service.VehicleService;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.*;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.Map;
 
 @Controller
@@ -34,6 +49,8 @@ public class ExpenseController {
 
     @Autowired
     ExpTypeService expTypeService;
+
+    private static final String UPLOAD_DIRECTORY ="/resources/files";
 
     @RequestMapping(value="/expense", method = RequestMethod.GET)
     public String expensePage(Map<String, Object> map, @RequestParam(value = "eId") Integer expenseId) {
@@ -194,5 +211,112 @@ public class ExpenseController {
 
             return "redirect:/vehicle?vId="+vId;
         }
+    }
+
+    @RequestMapping(value = "/importFromExcel", method = RequestMethod.POST)
+    public String importFromExcel(Map<String, Object> map, @RequestParam String vehicleId,
+                                  @RequestParam CommonsMultipartFile file, ModelMap modelMap, HttpSession session) throws IOException, ParseException {
+
+        Vehicle vehicle = vehicleService.getVehicle(Integer.parseInt(vehicleId));
+
+        fileUpload(file, session);
+
+        String file_directory ="/resources/files/expenses.xlsx";
+
+        ServletContext context = session.getServletContext();
+        String path = context.getRealPath(file_directory);
+
+        File excelFile = new File(path);
+        FileInputStream fis = new FileInputStream(excelFile);
+
+        XSSFWorkbook workbook = new XSSFWorkbook(fis);
+        XSSFSheet sheet = workbook.getSheetAt(0);
+
+        Iterator<Row> rowIt = sheet.iterator();
+
+        rowIt.next();
+
+        while(rowIt.hasNext()) {
+
+            Row row = rowIt.next();
+
+            Iterator<Cell> cellIterator = row.cellIterator();
+
+            String name = cellIterator.next().toString();
+            int type = (int)ParseFloat(cellIterator.next().toString());
+            String date = cellIterator.next().toString();
+            int milage = (int)ParseFloat(cellIterator.next().toString());
+            float price = ParseFloat(cellIterator.next().toString());
+
+            DateFormat dateFormatXLSX = new SimpleDateFormat("dd-MMM-yyyy");
+            DateFormat dateFormatSQL = new SimpleDateFormat("yyyy-mm-dd");
+            Date tempDate = dateFormatXLSX.parse(date);
+            date = dateFormatSQL.format(tempDate);
+
+            if (type == 6) {
+
+                float litres = ParseFloat(cellIterator.next().toString());
+                int level = (int)ParseFloat(cellIterator.next().toString());
+
+                int ftype;
+
+                if (name.equalsIgnoreCase("PB")) {
+                    ftype = 1;
+                }
+
+                else if (name.equalsIgnoreCase("ON")) {
+                    ftype = 2;
+                }
+
+                else {
+                    ftype = 3;
+                }
+
+                FuelExpense expense = new FuelExpense(vehicle, name, expTypeService.getExpType(type), ftype,
+                        date, milage, price, litres, level);
+
+                fuelExpenseService.add(expense);
+            }
+
+            else {
+
+                String description = cellIterator.next().toString();
+
+                Expense expense = new Expense(vehicle, name, expTypeService.getExpType(type), date, milage,
+                        price, description);
+
+                expenseService.add(expense);
+            }
+        }
+
+        modelMap.put("file", file);
+        modelMap.put("vehicleId", vehicleId);
+
+        return "redirect:/vehicle?vId="+vehicleId;
+    }
+
+    private void fileUpload(CommonsMultipartFile file, HttpSession session) throws IOException {
+
+        ServletContext context = session.getServletContext();
+        String path = context.getRealPath(UPLOAD_DIRECTORY);
+        String filename = "expenses.xlsx";
+
+        byte[] bytes = file.getBytes();
+        BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(
+                new File(path + File.separator + filename)));
+        stream.write(bytes);
+        stream.flush();
+        stream.close();
+    }
+
+    float ParseFloat(String strNumber) {
+        if (strNumber != null && strNumber.length() > 0) {
+            try {
+                return Float.parseFloat(strNumber);
+            } catch(Exception e) {
+                return -1;   // or some value to mark this field is wrong. or make a function validates field first ...
+            }
+        }
+        else return 0;
     }
 }
