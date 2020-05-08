@@ -27,6 +27,9 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -296,7 +299,15 @@ public class ExpenseController {
 
             else {
 
-                String description = cellIterator.next().toString();
+                String description;
+
+                if (cellIterator.hasNext()) {
+                    description = cellIterator.next().toString();
+                }
+
+                else {
+                    description = " ";
+                }
 
                 Expense expense = new Expense(vehicle, name, expTypeService.getExpTypeByName(type), date, milage,
                         price, description);
@@ -307,6 +318,8 @@ public class ExpenseController {
 
         modelMap.put("file", file);
         modelMap.put("vehicleId", vehicleId);
+
+        excelFile.delete();
 
         return "redirect:/vehicle?vId="+vehicleId;
     }
