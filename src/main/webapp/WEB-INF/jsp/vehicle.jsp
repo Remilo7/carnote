@@ -139,7 +139,8 @@
 
                         <div class="d-flex justify-content-between">
                             <button class="button type1" data-toggle="modal" data-target="#importModal">Import from .xslx</button>
-                            <a href="index"><button class="button type1">Export to .xslx</button></a>
+                            <p class="text-danger">${warning}</p>
+                            <a href="<c:url value="/resources/files/exported/expenses.xlsx"/>" download><button class="button type1">Export to .xslx</button></a>
                         </div>
                     </div>
                 </div>

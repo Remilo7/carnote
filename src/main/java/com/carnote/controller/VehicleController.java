@@ -7,6 +7,9 @@ import com.carnote.model.viewModel.ExpenseViewModel;
 import com.carnote.service.ExpenseService;
 import com.carnote.service.FuelExpenseService;
 import com.carnote.service.VehicleService;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -15,7 +18,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -33,6 +40,8 @@ public class VehicleController {
 
     @Autowired
     FuelExpenseService fuelExpenseService;
+
+    private static final String EXPORT_DIRECTORY ="/resources/files/exported/";
 
     @RequestMapping(value="/newVehicle", method = RequestMethod.GET)
     public String newVehiclePage(Map<String, Object> map) {
@@ -65,7 +74,8 @@ public class VehicleController {
     }
 
     @RequestMapping(value = "/vehicle", method = RequestMethod.GET)
-    public String vehiclePage(Map<String, Object> map, @RequestParam(value = "vId") Integer vehicleId) {
+    public String vehiclePage(Map<String, Object> map, @RequestParam(value = "vId") Integer vehicleId,
+                              @RequestParam(value = "warn", required=false) String warnMessage, HttpSession session) {
 
         Vehicle vehicle = vehicleService.getVehicle(vehicleId);
 
@@ -123,6 +133,18 @@ public class VehicleController {
             e.printStackTrace();
         }
 
+        try {
+            createExportFile(vehicle, expenses, fuelExpenses, session);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        String warning = " ";
+
+        if (warnMessage != (null)) {
+            warning = warnMessage;
+        }
+
         map.put("vehicle", vehicle);
         map.put("expense", new ExpenseViewModel());
         map.put("expenseList", expenseList);
@@ -142,6 +164,8 @@ public class VehicleController {
             map.put("lastLPG", fuelCons.get("lastLPG"));
             map.put("avgLPG", fuelCons.get("avgLPG"));
         }
+
+        map.put("warning", warning);
 
         return "vehicle";
     }
@@ -296,5 +320,62 @@ public class VehicleController {
         }
 
         return result;
+    }
+
+    private void createExportFile(Vehicle vehicle, List<Expense> expenses, List<FuelExpense> fuelExpenses, HttpSession session) throws IOException {
+
+        ServletContext context = session.getServletContext();
+        String path = context.getRealPath(EXPORT_DIRECTORY);
+
+        String excelFileName = path+"expenses.xlsx";
+
+        String sheetName = vehicle.getBrand()+" "+vehicle.getModel();
+
+        XSSFWorkbook wb = new XSSFWorkbook();
+        XSSFSheet sheet = wb.createSheet(sheetName) ;
+
+        XSSFRow excelHeader = sheet.createRow(0);
+        excelHeader.createCell(0).setCellValue("Name");
+        excelHeader.createCell(1).setCellValue("Type");
+        excelHeader.createCell(2).setCellValue("Date");
+        excelHeader.createCell(3).setCellValue("Milage");
+        excelHeader.createCell(4).setCellValue("Price");
+        excelHeader.createCell(5).setCellValue("Litres");
+        excelHeader.createCell(6).setCellValue("Level");
+        excelHeader.createCell(7).setCellValue("Description");
+
+        int record = 1;
+
+        for (Expense expense : expenses) {
+            XSSFRow excelRow = sheet.createRow(record++);
+
+            excelRow.createCell(0).setCellValue(expense.getName());
+            excelRow.createCell(1).setCellValue(expense.getType().getName());
+            excelRow.createCell(2).setCellValue(expense.getDate());
+            excelRow.createCell(3).setCellValue(expense.getMilage());
+            excelRow.createCell(4).setCellValue(expense.getPrice());
+            excelRow.createCell(5).setCellValue(" ");
+            excelRow.createCell(6).setCellValue(" ");
+            excelRow.createCell(7).setCellValue(expense.getDescription());
+        }
+
+        for (FuelExpense expense : fuelExpenses) {
+            XSSFRow excelRow = sheet.createRow(record++);
+
+            excelRow.createCell(0).setCellValue(expense.getName());
+            excelRow.createCell(1).setCellValue(expense.getType().getName());
+            excelRow.createCell(2).setCellValue(expense.getDate());
+            excelRow.createCell(3).setCellValue(expense.getMilage());
+            excelRow.createCell(4).setCellValue(expense.getPrice());
+            excelRow.createCell(5).setCellValue(expense.getLitres());
+            excelRow.createCell(6).setCellValue(expense.getLevel());
+            excelRow.createCell(7).setCellValue(" ");
+        }
+
+        FileOutputStream fileOut = new FileOutputStream(excelFileName);
+
+        wb.write(fileOut);
+        fileOut.flush();
+        fileOut.close();
     }
 }

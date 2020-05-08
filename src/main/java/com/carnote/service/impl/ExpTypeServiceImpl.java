@@ -18,4 +18,10 @@ public class ExpTypeServiceImpl implements ExpTypeService {
     public ExpType getExpType(int id) {
         return expTypeDAO.getExpType(id);
     }
+
+    @Override
+    @Transactional
+    public ExpType getExpTypeByName(String name) {
+        return expTypeDAO.getExpTypeByName(name);
+    }
 }

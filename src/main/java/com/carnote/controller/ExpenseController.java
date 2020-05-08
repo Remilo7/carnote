@@ -30,7 +30,6 @@ import java.io.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
@@ -215,7 +214,7 @@ public class ExpenseController {
 
     @RequestMapping(value = "/importFromExcel", method = RequestMethod.POST)
     public String importFromExcel(Map<String, Object> map, @RequestParam String vehicleId,
-                                  @RequestParam CommonsMultipartFile file, ModelMap modelMap, HttpSession session) throws IOException, ParseException {
+                                  @RequestParam CommonsMultipartFile file, ModelMap modelMap, HttpSession session) throws IOException {
 
         Vehicle vehicle = vehicleService.getVehicle(Integer.parseInt(vehicleId));
 
@@ -243,17 +242,34 @@ public class ExpenseController {
             Iterator<Cell> cellIterator = row.cellIterator();
 
             String name = cellIterator.next().toString();
-            int type = (int)ParseFloat(cellIterator.next().toString());
+            String type = cellIterator.next().toString();
             String date = cellIterator.next().toString();
             int milage = (int)ParseFloat(cellIterator.next().toString());
             float price = ParseFloat(cellIterator.next().toString());
 
-            DateFormat dateFormatXLSX = new SimpleDateFormat("dd-MMM-yyyy");
+            DateFormat dateFormatXLSX1 = new SimpleDateFormat("dd-MMM-yyyy");
+            DateFormat dateFormatXLSX2 = new SimpleDateFormat("yyyy-mm-dd");
+            DateFormat dateFormatXLSX3 = new SimpleDateFormat("dd.mm.yyyy");
             DateFormat dateFormatSQL = new SimpleDateFormat("yyyy-mm-dd");
-            Date tempDate = dateFormatXLSX.parse(date);
+            Date tempDate = null;
+            try {
+                tempDate = dateFormatXLSX1.parse(date);
+            } catch (ParseException e) {
+                try {
+                    tempDate = dateFormatXLSX2.parse(date);
+                } catch (ParseException ex) {
+                    try {
+                        tempDate = dateFormatXLSX3.parse(date);
+                    } catch (ParseException exc) {
+                        exc.printStackTrace();
+                        String warning = "Provide correctly formatted data!";
+                        return "redirect:/vehicle?vId="+vehicleId+"&warn="+warning;
+                    }
+                }
+            }
             date = dateFormatSQL.format(tempDate);
 
-            if (type == 6) {
+            if (type.equalsIgnoreCase("fuel")) {
 
                 float litres = ParseFloat(cellIterator.next().toString());
                 int level = (int)ParseFloat(cellIterator.next().toString());
@@ -272,7 +288,7 @@ public class ExpenseController {
                     ftype = 3;
                 }
 
-                FuelExpense expense = new FuelExpense(vehicle, name, expTypeService.getExpType(type), ftype,
+                FuelExpense expense = new FuelExpense(vehicle, name, expTypeService.getExpTypeByName(type), ftype,
                         date, milage, price, litres, level);
 
                 fuelExpenseService.add(expense);
@@ -282,7 +298,7 @@ public class ExpenseController {
 
                 String description = cellIterator.next().toString();
 
-                Expense expense = new Expense(vehicle, name, expTypeService.getExpType(type), date, milage,
+                Expense expense = new Expense(vehicle, name, expTypeService.getExpTypeByName(type), date, milage,
                         price, description);
 
                 expenseService.add(expense);
@@ -309,7 +325,7 @@ public class ExpenseController {
         stream.close();
     }
 
-    float ParseFloat(String strNumber) {
+    private float ParseFloat(String strNumber) {
         if (strNumber != null && strNumber.length() > 0) {
             try {
                 return Float.parseFloat(strNumber);
