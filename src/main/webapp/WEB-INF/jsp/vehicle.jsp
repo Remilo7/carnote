@@ -35,7 +35,7 @@
     </div>
 
     <div class="row">
-        <div class="col-sm-3">
+        <div class="col-md-3">
             <div class="col-sm-12 expenses-details" id="left-display">
                 <div class="row">
                     <div class="col-5 text-left">
@@ -76,7 +76,7 @@
             </div>
         </div>
 
-        <div class="col-sm-6">
+        <div class="col-md-6">
             <div class="row">
                 <div class="col-sm-12 table-responsive table-wrapper table-vehicle-wrapper">
 
@@ -147,7 +147,7 @@
             </div>
         </div>
 
-        <div class="col-sm-3">
+        <div class="col-md-3">
             <div class="col-sm-12 expenses-details" id="right-display">
                 <div class="row">
                     <div class="col-5 text-left">
@@ -176,8 +176,8 @@
     </div>
 
     <div class="row">
-        <div class="col-sm-3"></div>
-        <div class="col-sm-6">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
             <div class="row p-0">
                 <div class="col-sm-12 d-flex justify-content-between p-0">
                     <a href="index"><button class="btn btn-dark bottom-zero">Go back</button></a>
@@ -185,7 +185,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-3"></div>
+        <div class="col-md-3"></div>
     </div>
 </div>
 
