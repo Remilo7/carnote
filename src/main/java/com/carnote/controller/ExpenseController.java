@@ -148,6 +148,8 @@ public class ExpenseController {
 
             expenseService.edit(expenseToAdd);
 
+            id = expense.getCarId();
+
             return "redirect:/vehicle?vId="+id;
         }
     }
