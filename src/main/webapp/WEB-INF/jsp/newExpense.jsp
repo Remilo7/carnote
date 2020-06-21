@@ -18,7 +18,7 @@
     <link href="<c:url value="/resources/static/css/buttons1.css" />" rel="stylesheet">
     <link href="<c:url value="/resources/static/css/selectbox.css" />" rel="stylesheet">
 </head>
-<body>
+<body onload="hideZeros()">
 
 <div class="container-fluid">
     <div class="row">
@@ -70,14 +70,14 @@
                         </div>
 
                         <div class="group">
-                            <form:input type="text" name="milage" path="milage" required="required" />
+                            <form:input type="text" name="milage" path="milage" />
                             <span class="highlight"></span>
                             <span class="bar"></span>
                             <label>Milage</label>
                         </div>
 
                         <div class="group">
-                            <form:input type="text" name="price" path="price" onkeyup="addDot(this);" required="required" />
+                            <form:input type="text" name="price" path="price" onkeyup="addDot(this);" />
                             <span class="highlight"></span>
                             <span class="bar"></span>
                             <label>Price</label>

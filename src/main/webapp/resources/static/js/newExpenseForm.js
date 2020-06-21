@@ -1,43 +1,70 @@
 function validateForm() {
 
-    var price = parseFloat(document.forms["expenseForm"]["price"].value);
-    var milage = parseInt(document.forms["expenseForm"]["milage"].value, 10);
+    var price = document.forms["expenseForm"]["price"].value;
+    var milage = document.forms["expenseForm"]["milage"].value;
 
-    var letters = /^[A-Za-z]+$/;
-
-    if (!brand.match(letters)) {
-        showErrorMessage();
+    if (milage == "" || milage==null) {
+        showErrorMessage(1);
         return false;
+    }
+
+    else {
+        milage = parseInt(milage, 10);
     }
 
     if (Number.isInteger(milage)) {
         if (milage < 0) {
-            showErrorMessage();
+            showErrorMessage(2);
             return false;
         }
     }
 
     else {
-        showErrorMessage();
+        showErrorMessage(2);
         return false;
+    }
+
+    if (price == "" || price==null) {
+        showErrorMessage(1);
+        return false;
+    }
+
+    else {
+        price = parseFloat(price);
     }
 
     if(!isNaN(price)) {
         if (price <= 0) {
-            showErrorMessage();
+            showErrorMessage(2);
             return false;
         }
     }
 
     else {
-        showErrorMessage();
+        showErrorMessage(2);
         return false;
     }
 }
 
-function showErrorMessage() {
-    document.getElementById("message").innerHTML = "Provide correct data!"
+function showErrorMessage(x) {
+
+    let mes;
+
+    if (x==1)
+        mes = "Provide data!";
+    else if (x==2)
+        mes = "Provide correct data!";
+
+    document.getElementById("message").innerHTML = mes;
     document.getElementById("errorMessage").style.display = "block";
+}
+
+function hideZeros() {
+    if(document.getElementById("price").value == 0.0)
+        document.getElementById("price").value = null;
+
+    if(document.getElementById("milage").value == 0.0)
+        document.getElementById("milage").value = null;
 }
 
 function addDot(txt) {
