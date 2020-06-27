@@ -1,16 +1,13 @@
 package com.carnote.controller;
 
-import com.carnote.model.entity.Expense;
-import com.carnote.model.entity.FuelExpense;
-import com.carnote.model.entity.Vehicle;
+import com.carnote.model.entity.*;
 import com.carnote.model.viewModel.ExpenseViewModel;
-import com.carnote.service.ExpenseService;
-import com.carnote.service.FuelExpenseService;
-import com.carnote.service.VehicleService;
+import com.carnote.service.*;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -23,6 +20,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.security.Principal;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -36,7 +34,13 @@ public class VehicleController {
     VehicleService vehicleService;
 
     @Autowired
+    UserVehicleService userVehicleService;
+
+    @Autowired
     ExpenseService expenseService;
+
+    @Autowired
+    UserInfoService userInfoService;
 
     @Autowired
     FuelExpenseService fuelExpenseService;
@@ -51,7 +55,7 @@ public class VehicleController {
     }
 
     @RequestMapping(value="/addVehicle", method= RequestMethod.POST)
-    public String addVehicle(@Valid @ModelAttribute Vehicle vehicle, BindingResult br) {
+    public String addVehicle(@Valid @ModelAttribute Vehicle vehicle, BindingResult br, Principal principal) {
 
         if (br.hasErrors()) {
             return "newVehicle";
@@ -59,13 +63,15 @@ public class VehicleController {
 
         else {
 
-            vehicleService.add(vehicle);
+            vehicle.setId(vehicleService.add(vehicle));
+            userVehicleService.add(new UserVehicle(userInfoService.findUserInfo(principal.getName()), vehicle));
 
             return "redirect:/index";
         }
     }
 
     @RequestMapping(value="/deleteVehicle", method= RequestMethod.GET)
+    @PreAuthorize("@userVehicleEvaluator.isUserVehicle(#vehicleId, authentication.name)")
     public String deleteVehicle(@RequestParam(value = "vId") Integer vehicleId) {
 
         vehicleService.delete(vehicleId);
@@ -74,6 +80,7 @@ public class VehicleController {
     }
 
     @RequestMapping(value = "/vehicle", method = RequestMethod.GET)
+    @PreAuthorize("@userVehicleEvaluator.isUserVehicle(#vehicleId, authentication.name)")
     public String vehiclePage(Map<String, Object> map, @RequestParam(value = "vId") Integer vehicleId,
                               @RequestParam(value = "warn", required=false) String warnMessage, HttpSession session) {
 

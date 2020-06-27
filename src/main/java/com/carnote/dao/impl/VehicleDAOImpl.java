@@ -15,8 +15,8 @@ public class VehicleDAOImpl implements VehicleDAO {
     SessionFactory session;
 
     @Override
-    public void add(Vehicle vehicle) {
-        session.getCurrentSession().save(vehicle);
+    public int add(Vehicle vehicle) {
+        return (Integer)session.getCurrentSession().save(vehicle);
     }
 
     @Override

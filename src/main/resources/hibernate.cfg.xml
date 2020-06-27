@@ -11,5 +11,6 @@
         <mapping class="com.carnote.model.entity.ExpType" />
         <mapping class="com.carnote.model.entity.Expense" />
         <mapping class="com.carnote.model.entity.FuelExpense" />
+        <mapping class="com.carnote.model.entity.UserVehicle" />
     </session-factory>
 </hibernate-configuration>

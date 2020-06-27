@@ -14,6 +14,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -55,6 +56,7 @@ public class ExpenseController {
     private static final String UPLOAD_DIRECTORY ="/resources/files";
 
     @RequestMapping(value="/expense", method = RequestMethod.GET)
+    @PreAuthorize("@userVehicleEvaluator.isUserExpense(#expenseId, authentication.name)")
     public String expensePage(Map<String, Object> map, @RequestParam(value = "eId") Integer expenseId) {
 
         Expense expense = expenseService.getExpense(expenseId);
@@ -64,6 +66,7 @@ public class ExpenseController {
     }
 
     @RequestMapping(value="/fuelExpense", method = RequestMethod.GET)
+    @PreAuthorize("@userVehicleEvaluator.isUserFuelExpense(#expenseId, authentication.name)")
     public String fuelExpensePage(Map<String, Object> map, @RequestParam(value = "eId") Integer expenseId) {
 
         FuelExpense expense = fuelExpenseService.getFuelExpense(expenseId);
@@ -73,6 +76,7 @@ public class ExpenseController {
     }
 
     @RequestMapping(value="/newExpense", method = RequestMethod.GET)
+    @PreAuthorize("@userVehicleEvaluator.isUserVehicle(#vehicleId, authentication.name)")
     public String newExpensePage(Map<String, Object> map, @RequestParam(value = "vId") Integer vehicleId) {
 
         Vehicle vehicle = vehicleService.getVehicle(vehicleId);
@@ -83,6 +87,7 @@ public class ExpenseController {
     }
 
     @RequestMapping(value="/editExpense", method = RequestMethod.GET)
+    @PreAuthorize("@userVehicleEvaluator.isUserExpense(#expenseId, authentication.name)")
     public String editExpensePage(Map<String, Object> map, @RequestParam(value = "eId") Integer expenseId) {
 
         Expense expense = expenseService.getExpense(expenseId);
@@ -93,6 +98,7 @@ public class ExpenseController {
     }
 
     @RequestMapping(value="/deleteExpense", method = RequestMethod.GET)
+    @PreAuthorize("@userVehicleEvaluator.isUserExpense(#expenseId, authentication.name)")
     public String deleteExpense(@RequestParam(value = "eId") Integer expenseId) {
 
         int vehicleId = expenseService.getExpense(expenseId).getCar().getId();
@@ -103,6 +109,7 @@ public class ExpenseController {
     }
 
     @RequestMapping(value="/deleteFuelExpense", method = RequestMethod.GET)
+    @PreAuthorize("@userVehicleEvaluator.isUserFuelExpense(#expenseId, authentication.name)")
     public String deleteFuelExpense(@RequestParam(value = "eId") Integer expenseId) {
 
         int vehicleId = fuelExpenseService.getFuelExpense(expenseId).getCar().getId();
@@ -155,7 +162,9 @@ public class ExpenseController {
     }
 
     @RequestMapping(value="/newFuelExpense", method = RequestMethod.GET)
-    public String newFuelExpensePage(Map<String, Object> map, @RequestParam(value = "vId") Integer vehicleId, @RequestParam(value = "ft") Integer fType) {
+    @PreAuthorize("@userVehicleEvaluator.isUserVehicle(#vehicleId, authentication.name)")
+    public String newFuelExpensePage(Map<String, Object> map, @RequestParam(value = "vId") Integer vehicleId,
+                                     @RequestParam(value = "ft") Integer fType) {
 
         Vehicle vehicle = vehicleService.getVehicle(vehicleId);
 
@@ -187,6 +196,7 @@ public class ExpenseController {
     }
 
     @RequestMapping(value="/editFuelExpense", method = RequestMethod.GET)
+    @PreAuthorize("@userVehicleEvaluator.isUserFuelExpense(#expenseId, authentication.name)")
     public String editFuelExpensePage(Map<String, Object> map, @RequestParam(value = "eId") Integer expenseId) {
 
         FuelExpense expense = fuelExpenseService.getFuelExpense(expenseId);
@@ -218,8 +228,9 @@ public class ExpenseController {
     }
 
     @RequestMapping(value = "/importFromExcel", method = RequestMethod.POST)
-    public String importFromExcel(Map<String, Object> map, @RequestParam String vehicleId,
-                                  @RequestParam CommonsMultipartFile file, ModelMap modelMap, HttpSession session) throws IOException {
+    @PreAuthorize("@userVehicleEvaluator.isUserVehicle(#vehicleId, authentication.name)")
+    public String importFromExcel(@RequestParam String vehicleId, @RequestParam CommonsMultipartFile file, ModelMap modelMap,
+                                  HttpSession session) throws IOException {
 
         Vehicle vehicle = vehicleService.getVehicle(Integer.parseInt(vehicleId));
 

@@ -17,8 +17,8 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     @Transactional
-    public void add(Vehicle vehicle) {
-        vehicleDAO.add(vehicle);
+    public int add(Vehicle vehicle) {
+        return vehicleDAO.add(vehicle);
     }
 
     @Override

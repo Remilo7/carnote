@@ -75,6 +75,20 @@ function validateForm() {
     }
 }
 
+function hideZeros() {
+    if(document.getElementById("year").value == 0.0)
+        document.getElementById("year").value = null;
+
+    if(document.getElementById("milage").value == 0.0)
+        document.getElementById("milage").value = null;
+
+    if(document.getElementById("cap1").value == 0.0)
+        document.getElementById("cap1").value = null;
+
+    if(document.getElementById("cap2").value == 0.0)
+        document.getElementById("cap2").value = null;
+}
+
 function showErrorMessage() {
     document.getElementById("message").innerHTML = "Provide correct data!"
     document.getElementById("errorMessage").style.display = "block";
