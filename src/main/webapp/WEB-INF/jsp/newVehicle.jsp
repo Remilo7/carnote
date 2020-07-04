@@ -55,7 +55,7 @@
                         </div>
 
                         <div class="group">
-                            <form:input type="text" name="year" path="year" required="required" />
+                            <form:input type="text" name="year" path="year" />
                             <span class="highlight"></span>
                             <span class="bar"></span>
                             <label>Year</label>
@@ -71,7 +71,7 @@
                         </div>
 
                         <div class="group">
-                            <form:input type="text" name="cap1" path="cap1" required="required" onchange="mainTankCap(this.value);" />
+                            <form:input type="text" name="cap1" path="cap1" onchange="mainTankCap(this.value);" />
                             <span class="highlight"></span>
                             <span class="bar"></span>
                             <label>Main fuel tank capacity</label>
@@ -103,7 +103,7 @@
                         <div class="input-spacer"></div>
 
                         <div class="group">
-                            <form:input type="text" name="milage" path="milage" required="required" />
+                            <form:input type="text" name="milage" path="milage" />
                             <span class="highlight"></span>
                             <span class="bar"></span>
                             <label>Milage</label>
