@@ -3,7 +3,8 @@ Spring MVC based car expenses notebook and calculator.
 
 ## Features
  - Bootstrap based front-end
- - MySQL database 
+ - MySQL database
+ - User registration / login system 
  - Adding / removing vehicles
  - Adding / removing / editing expenses 
     - Various categories of expenses
