@@ -53,4 +53,9 @@ public class LoginController {
 
         return "redirect:/login?succ=1";
     }
+
+    @RequestMapping(value = "/403")
+    public String page403() {
+        return "403";
+    }
 }

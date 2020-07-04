@@ -88,7 +88,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .usernameParameter("username")//
                 .passwordParameter("password")
                 // Config for Logout Page
-                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/index");
+                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/index")
+                // Config for Remember Me
+                .and().rememberMe().key("uniqueAndSecret");
 
         http.headers().frameOptions().sameOrigin()
                 .and();

@@ -14,7 +14,7 @@
 
     <link href="<c:url value="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />" rel="stylesheet">
     <link href="<c:url value="/resources/static/css/style.css" />" rel="stylesheet">
-    <link href="<c:url value="/resources/static/css/style3.css" />" rel="stylesheet">
+    <link href="<c:url value="/resources/static/css/bg1.css" />" rel="stylesheet">
     <link href="<c:url value="/resources/static/css/buttons1.css" />" rel="stylesheet">
 </head>
 <body>
@@ -188,6 +188,8 @@
         <div class="col-md-3"></div>
     </div>
 </div>
+
+<%-- Modals --%>
 
 <div class="modal fade" id="fuelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">

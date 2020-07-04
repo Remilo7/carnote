@@ -13,7 +13,7 @@
 
     <link href="<c:url value="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />" rel="stylesheet">
     <link href="<c:url value="/resources/static/css/style.css" />" rel="stylesheet">
-    <link href="<c:url value="/resources/static/css/style3.css" />" rel="stylesheet">
+    <link href="<c:url value="/resources/static/css/bg3.css" />" rel="stylesheet">
     <link href="<c:url value="/resources/static/css/buttons1.css" />" rel="stylesheet">
 </head>
 <body>

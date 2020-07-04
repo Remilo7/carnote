@@ -1,0 +1,68 @@
+i {
+    display: block;
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    top: 30px;
+    left: 30px;
+    background: url(http://i.imgur.com/lOBxb.png);
+    -webkit-animation: barrelRoll 2s infinite linear;
+    -webkit-animation-play-state: paused;
+
+}
+
+#settingsDesktop i {
+    margin-top: 40px;
+}
+
+#settingsDesktop {
+    display: block;
+}
+
+#settingsMobile i {
+    top: 20px;
+    right: 46px;
+    left: auto;
+}
+
+#settingsMobile {
+    display: none;
+    color: transparent;
+}
+
+@media all and (max-width: 744px) {
+
+    #settingsDesktop {
+        display: none;
+    }
+
+    #settingsMobile {
+        display: block;
+    }
+}
+
+i:last-of-type {
+    top: 22px;
+    left: 56px;
+    -webkit-animation-name: invertBarrelRoll;
+}
+
+#settingsMobile i:last-of-type {
+    top: 12px;
+    right: 20px;
+    left: auto;
+}
+
+a:hover > i {
+    -webkit-animation-play-state: running;
+}
+
+@-webkit-keyframes barrelRoll {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+}
+
+@-webkit-keyframes invertBarrelRoll {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(-360deg); }
+}

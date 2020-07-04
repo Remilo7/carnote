@@ -14,7 +14,7 @@ body:after{
     left:0;
     right:0;
     z-index:-1; /* needed to keep in the background */
-    background: url("../img/bg.jpg") center center;
+    /*background: url("../img/bg.jpg") center center;*/
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -35,6 +35,25 @@ body:after{
             1px 1px 0 #000;
 }
 
+.accessDeniedHeader {
+    margin-top: 20px;
+    font-size: 60px;
+    color: #a50f1d;
+    -webkit-animation: accessDeniedHeader 1s ease-in-out infinite alternate;
+    -moz-animation: accessDeniedHeader 1s ease-in-out infinite alternate;
+    animation: accessDeniedHeader 1s ease-in-out infinite alternate;
+}
+
+@-webkit-keyframes accessDeniedHeader {
+    from {
+        text-shadow: 0 0 5px #1d1d1d, 0 0 10px #be304b, 0 0 15px #a50f1d, 0 0 20px #8f0413, 0 0 25px #e60073, 0 0 30px #e60073, 0 0 35px #e60073;
+    }
+
+    to {
+        text-shadow: 0 0 10px #390711, 0 0 15px #bc0a35, 0 0 20px #bb0715, 0 0 25px #bf0e23, 0 0 30px #ff4da6, 0 0 35px #ff4da6, 0 0 40px #ff4da6;
+    }
+}
+
 .pagetitle {
     font-family: 'Trade Winds', cursive;
 }
@@ -46,6 +65,7 @@ body:after{
     -moz-box-shadow: 0px 7px 19px 0px rgba(0,0,0,0.61);
     box-shadow: 0px 7px 19px 0px rgba(0,0,0,0.61);
 }
+
 
 .table td {
     vertical-align: middle;
