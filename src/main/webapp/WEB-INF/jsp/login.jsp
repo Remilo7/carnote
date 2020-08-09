@@ -19,7 +19,7 @@
     <meta property="og:url" content="http://carnote.herokuapp.com/">
     <meta property="og:title" content="CarNote - notebook and calculator for expenses of your car">
     <meta property="og:description" content="Store expenses of your vehicle, divided conveniently into categories. See calculated fuel consumption. Remember of MOT and insurance end date. ">
-    <meta property="og:image" content="<c:url value="/resources/static/img/meta-logo.jpg" />">
+    <meta property="og:image" content="${pageContext.request.contextPath}/resources/static/img/meta-logo.jpg">
 
     <title>Log In</title>
 
