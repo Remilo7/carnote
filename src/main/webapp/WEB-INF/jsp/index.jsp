@@ -9,6 +9,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <!-- Primary Meta Tags -->
+    <title>CarNote - notebook and calculator for expenses of your car</title>
+    <meta name="title" content="CarNote - notebook and calculator for expenses of your car">
+    <meta name="description" content="Store expenses of your vehicle, divided conveniently into categories. See calculated fuel consumption. Remember of MOT and insurance end date. ">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="http://carnote.herokuapp.com/">
+    <meta property="og:title" content="CarNote - notebook and calculator for expenses of your car">
+    <meta property="og:description" content="Store expenses of your vehicle, divided conveniently into categories. See calculated fuel consumption. Remember of MOT and insurance end date. ">
+    <meta property="og:image" content="../img/meta-logo.jpg">
+
     <title>Main page</title>
 
     <link href="<c:url value="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />" rel="stylesheet">
