@@ -89,11 +89,12 @@
                             <div class="input-spacer"></div>
 
                             <!-- Register Form -->
-                            <form:form name="registrationForm" action="addUser" method="post" modelAttribute="user">
+                            <form:form name="registrationForm" action="addUser" method="post" modelAttribute="user" onsubmit="return validateForm()">
 
                                 <form:input type="text" path="username" class="fadeIn first" name="username" placeholder="Username" />
                                 <form:input type="password" path="password" class="fadeIn second" name="password" placeholder="Password" />
-                                <form:button type="submit" class="fadeIn third">Sign Up</form:button>
+                                <input type="password" class="fadeIn third" id="retyped_password" placeholder="Retype password" />
+                                <form:button type="submit" class="fadeIn fourth">Sign Up</form:button>
 
                                 <c:if test="${param.succ == '1'}">
                                     <p class="text-success">Success. You can log in now.</p>
@@ -102,6 +103,8 @@
                                 <c:if test="${param.succ == '0'}">
                                     <p class="text-danger">User already exists. Choose different username.</p>
                                 </c:if>
+
+                                <p class="text-danger d-hidden" id="passwordError"></p>
 
                                 <div class="formFooter">
                                     <a class="underlineHover" onclick="displayLogin()">Log In</a>
