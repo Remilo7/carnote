@@ -62,7 +62,7 @@
                         </div>
 
                         <div class="group">
-                            <form:select path="ftype" onchange="fuelChange(this);">
+                            <form:select name="ftype" path="ftype" onchange="fuelChange(this);">
                                 <form:option value="1" disabled="true" cssClass="placeholder">Fuel type</form:option>
                                 <form:option value="1">Petrol</form:option>
                                 <form:option value="2">Diesel</form:option>
@@ -87,7 +87,7 @@
                         <div class="input-spacer" id="lpg-spacer"></div>
 
                         <div class="group" id="lpg-cap">
-                            <form:input type="text" name="cap2" path="cap2" onchange="secTankCap(this.value);" />
+                            <form:input type="text" id="cap2" name="cap2" path="cap2" onchange="secTankCap(this.value);" />
                             <span class="highlight"></span>
                             <span class="bar"></span>
                             <label>LPG tank capacity</label>

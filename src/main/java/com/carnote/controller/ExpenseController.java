@@ -314,6 +314,9 @@ public class ExpenseController {
 
                 String description;
 
+                cellIterator.next();
+                cellIterator.next();
+
                 if (cellIterator.hasNext()) {
                     description = cellIterator.next().toString();
                 }

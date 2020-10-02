@@ -23,13 +23,13 @@ function validateForm() {
     var brand = document.forms["vehicleForm"]["brand"].value;
     var year = document.forms["vehicleForm"]["year"].value;
     var cap1 = document.forms["vehicleForm"]["cap1"].value;
-    var cap2 = parseInt(document.forms["vehicleForm"]["cap2"].value, 10);
     var milage = document.forms["vehicleForm"]["milage"].value;
+    var ftype = parseInt(document.forms["vehicleForm"]["ftype"].value, 10);
 
     var letters = /^[A-Za-z]+$/;
 
     if (!brand.match(letters)) {
-        showErrorMessage();
+        showErrorMessage(7);
         return false;
     }
 
@@ -47,18 +47,13 @@ function validateForm() {
 
     if (Number.isInteger(year)) {
         if (year < 1900 || year > currYear) {
-            showErrorMessage(2);
+            showErrorMessage(3);
             return false;
         }
     }
 
     if (!Number.isInteger(year)) {
-        showErrorMessage(2);
-        return false;
-    }
-
-    if (!(Number.isInteger(cap2))) {
-        showErrorMessage(2);
+        showErrorMessage(3);
         return false;
     }
 
@@ -73,16 +68,33 @@ function validateForm() {
 
     if (Number.isInteger(cap1)) {
         if (cap1 < 0) {
-            showErrorMessage(2);
+            showErrorMessage(5);
             return false;
         }
     }
 
-    if (Number.isInteger(cap2)) {
-        if (cap2 < 0) {
-            showErrorMessage(2);
+    if (ftype==3) {
+        var cap2 = document.forms["vehicleForm"]["cap2"].value;
+
+        if (cap2 == "" || cap2==null) {
+            showErrorMessage(1);
             return false;
         }
+
+        else {
+            cap2 = parseInt(cap2, 10);
+        }
+
+        if (Number.isInteger(cap2)) {
+            if (cap2 < 0) {
+                showErrorMessage(6);
+                return false;
+            }
+        }
+    }
+
+    else {
+        document.getElementById("cap2").value="0";
     }
 
     if (milage == "" || milage==null) {
@@ -96,7 +108,7 @@ function validateForm() {
 
     if (Number.isInteger(milage)) {
         if (milage < 0) {
-            showErrorMessage(2);
+            showErrorMessage(4);
             return false;
         }
     }
@@ -126,9 +138,27 @@ function showErrorMessage(x) {
     let mes;
 
     if (x==1)
-        mes = "Provide data!";
+        mes = "Provide all data!";
     else if (x==2)
         mes = "Provide correct data!";
+
+    else if (x==3)
+        mes = "Provide correct year!";
+
+    else if (x==4)
+        mes = "Provide correct milage!";
+
+    else if (x==5)
+        mes = "Provide correct main tank capacity!";
+
+    else if (x==6)
+        mes = "Provide correct LPG tank capacity!";
+
+    else if (x==7)
+        mes = "Provide correct brand name (without numbers and spaces)!";
+
+    else
+        mes = "There is a serious problem!";
 
     document.getElementById("message").innerHTML = mes;
     document.getElementById("errorMessage").style.display = "block";
