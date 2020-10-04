@@ -8,6 +8,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#016188">
 
     <title>Fuel Expense Data</title>
 
@@ -40,7 +41,7 @@
                     <h5><b>Fuel level after tanking: </b>${expense.level} L</h5>
 
                     <div class="d-flex justify-content-between">
-                        <a href="deleteFuelExpense?eId=${expense.id}"><button class="button type4">Delete</button></a>
+                        <button class="button type4" data-toggle="modal" data-target="#deleteModal">Delete</button>
                         <a href="editFuelExpense?eId=${expense.id}"><button class="button type3">Edit</button></a>
                     </div>
                 </div>
@@ -55,6 +56,25 @@
 
         </div>
         <div class="col-sm-3"></div>
+    </div>
+</div>
+
+<%-- Modals --%>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLongTitle">Confirm deleting record</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body d-flex justify-content-between">
+                <button type="button" class="btn btn-dark" data-dismiss="modal">Cancel</button>
+                <a href="deleteFuelExpense?eId=${expense.id}"><button class="btn btn-danger">Delete</button></a>
+            </div>
+        </div>
     </div>
 </div>
 

@@ -5,7 +5,7 @@ i {
     height: 30px;
     top: 30px;
     left: 30px;
-    background: url(http://i.imgur.com/lOBxb.png);
+    background: url('../img/gear.png');
     -webkit-animation: barrelRoll 2s infinite linear;
     -webkit-animation-play-state: paused;
 

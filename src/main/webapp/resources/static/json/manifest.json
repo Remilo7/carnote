@@ -1,0 +1,50 @@
+{
+  "name": "CarNote - notebook and calculator for expenses of your car",
+  "short_name": "CarNote",
+  "icons": [
+    {
+      "src": "../img/icons/16.png",
+      "type": "image/ico",
+      "sizes": "16x16"
+    },
+    {
+      "src": "../img/icons/32.png",
+      "type": "image/ico",
+      "sizes": "32x32"
+    },
+    {
+      "src": "../img/icons/48.png",
+      "type": "image/png",
+      "sizes": "48x48"
+    },
+    {
+      "src": "../img/icons/72.png",
+      "type": "image/png",
+      "sizes": "72x72"
+    },
+    {
+      "src": "../img/icons/76.png",
+      "type": "image/png",
+      "sizes": "76x76"
+    },
+    {
+      "src": "../img/icons/96.png",
+      "type": "image/webp",
+      "sizes": "96x96"
+    },
+    {
+      "src": "../img/icons/120.png",
+      "type": "image/png",
+      "sizes": "120x120"
+    },
+    {
+      "src": "../img/icons/512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "theme_color": "#016188",
+  "background_color": "#c7c5c5",
+  "display": "fullscreen"
+}

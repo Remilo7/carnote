@@ -8,6 +8,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#016188">
 
     <!-- Primary Meta Tags -->
     <title>CarNote - notebook and calculator for expenses of your car</title>
@@ -28,6 +29,17 @@
     <link href="<c:url value="/resources/static/css/bg1.css" />" rel="stylesheet">
     <link href="<c:url value="/resources/static/css/buttons2.css" />" rel="stylesheet">
     <link href="<c:url value="/resources/static/css/gears.css" />" rel="stylesheet">
+
+    <link href="<c:url value="/resources/static/json/manifest.json" />" rel="manifest">
+
+    <link rel="apple-touch-icon" sizes="16x16" href="<c:url value="/resources/static/img/icons/16.png" />">
+    <link rel="apple-touch-icon" sizes="32x32" href="<c:url value="/resources/static/img/icons/32.png" />">
+    <link rel="apple-touch-icon" sizes="48x48" href="<c:url value="/resources/static/img/icons/48.png" />">
+    <link rel="apple-touch-icon" sizes="72x72" href="<c:url value="/resources/static/img/icons/72.png" />">
+    <link rel="apple-touch-icon" sizes="76x76" href="<c:url value="/resources/static/img/icons/76.png" />">
+    <link rel="apple-touch-icon" sizes="96x96" href="<c:url value="/resources/static/img/icons/96.png" />">
+    <link rel="apple-touch-icon" sizes="120x120" href="<c:url value="/resources/static/img/icons/120.png" />">
+    <link rel="apple-touch-icon" sizes="512x512" href="<c:url value="/resources/static/img/icons/512.png" />">
 </head>
 <body>
 
@@ -114,6 +126,19 @@
 
 <script type="text/javascript" src="<c:url value="https://code.jquery.com/jquery-3.2.1.slim.min.js" />"></script>
 <script type="text/javascript" src="<c:url value="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" />"></script>
+
+<script>
+    // sprawdzamy czy przeglądarka posiada wsparcie dla service workera
+    if ('serviceWorker' in navigator) {
+        // próba instalacji
+        navigator.serviceWorker.register('<c:url value="/resources/static/js/service-worker.js" />').then(function () {
+            console.log('Service worker zainstalowany');
+        }).catch(function (err) {
+            // jeśli coś pójdzie nie tak- konsola nam powie co trzeba poprawić
+            console.log('Service worker nie zainstalowany, sprawdź błąd:', err)
+        });
+    }
+</script>
 
 </body>
 </html>
