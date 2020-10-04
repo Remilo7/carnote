@@ -38,7 +38,7 @@
     <link rel="apple-touch-icon" sizes="76x76" href="<c:url value="/resources/static/img/icons/76.png" />">
     <link rel="apple-touch-icon" sizes="96x96" href="<c:url value="/resources/static/img/icons/96.png" />">
     <link rel="apple-touch-icon" sizes="120x120" href="<c:url value="/resources/static/img/icons/120.png" />">
-    <link rel="apple-touch-icon" sizes="512x512" href="<c:url value="/resources/static/img/icons/512.png" />">
+    <link rel="apple-touch-icon" sizes="512x512" href="<c:url value="/resources/static/img/icons/512.png" />">2
 
 </head>
 <body
@@ -105,7 +105,7 @@
 
                                 <form:input type="text" path="username" class="fadeIn first" name="username" placeholder="Username" />
                                 <form:input type="password" path="password" class="fadeIn second" name="password" placeholder="Password" />
-                                <input type="password" class="fadeIn third" id="retyped_password" placeholder="Retype password" />
+                                <form:input type="password" path="retyped_password" class="fadeIn third" id="retyped_password" placeholder="Retype password" />
                                 <form:button type="submit" class="fadeIn fourth">Sign Up</form:button>
 
                                 <c:if test="${param.succ == '1'}">
@@ -114,6 +114,10 @@
 
                                 <c:if test="${param.succ == '0'}">
                                     <p class="text-danger">User already exists. Choose different username.</p>
+                                </c:if>
+
+                                <c:if test="${param.succ == '2'}">
+                                    <p class="text-danger">Passwords don't match.</p>
                                 </c:if>
 
                                 <p class="text-danger d-hidden" id="passwordError"></p>

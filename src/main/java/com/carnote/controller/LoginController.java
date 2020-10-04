@@ -2,6 +2,7 @@ package com.carnote.controller;
 
 import com.carnote.model.entity.UserInfo;
 import com.carnote.model.entity.UserRole;
+import com.carnote.model.viewModel.RegistrationUserViewModel;
 import com.carnote.service.UserInfoService;
 import com.carnote.service.UserRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,14 +36,22 @@ public class LoginController {
     public String loginPage(@RequestParam(value = "succ", required=false) Integer succ,
                             @RequestParam(value = "error", required=false) boolean error, Map<String, Object> map) {
 
-        map.put("user", new UserInfo());
+        map.put("user", new RegistrationUserViewModel());
         map.put("succ", succ);
         map.put("error", error);
         return "login";
     }
 
     @RequestMapping(value="/addUser", method= RequestMethod.POST)
-    public String addUser(@ModelAttribute UserInfo user) {
+    public String addUser(@ModelAttribute RegistrationUserViewModel user) {
+
+        if ((user.getUsername() == null) || (user.getUsername().equals(""))) {
+            return "redirect:/login?succ=0";
+        }
+
+        if (!user.getPassword().equals(user.getRetyped_password())) {
+            return "redirect:/login?succ=2";
+        }
 
         try {
             userInfoService.add(new UserInfo(user.getUsername(), passwordRegistrationEncoder().encode(user.getPassword())));
