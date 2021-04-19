@@ -79,6 +79,29 @@ public class VehicleController {
         return "redirect:/index";
     }
 
+    @RequestMapping(value="/editVehiclePage", method= RequestMethod.GET)
+    @PreAuthorize("@userVehicleEvaluator.isUserVehicle(#vehicleId, authentication.name)")
+    public String editVehiclePage(@RequestParam(value = "vId") Integer vehicleId, Map<String, Object> map) {
+
+        map.put("vehicle", vehicleService.getVehicle(vehicleId));
+        return "editVehicle";
+    }
+
+    @RequestMapping(value="/editVehicle", method= RequestMethod.POST)
+    public String editVehicle(@Valid @ModelAttribute Vehicle vehicle, BindingResult br) {
+
+        if (br.hasErrors()) {
+            return "editVehiclePage?vId="+vehicle.getId();
+        }
+
+        else {
+
+            vehicleService.edit(vehicle);
+
+            return "redirect:/vehicle?vId="+vehicle.getId();
+        }
+    }
+
     @RequestMapping(value = "/vehicle", method = RequestMethod.GET)
     @PreAuthorize("@userVehicleEvaluator.isUserVehicle(#vehicleId, authentication.name)")
     public String vehiclePage(Map<String, Object> map, @RequestParam(value = "vId") Integer vehicleId,
@@ -258,10 +281,22 @@ public class VehicleController {
 
             else {
 
-                float distSum = lpgExpenses.get(0).getMilage()-carMilage;
                 float tankSum = lpgExpenses.stream()
                         .map(x -> x.getLitres())
                         .reduce((float)0, Float::sum);
+
+                if (vehicle.getLevel2() == 0) {
+                    FuelExpense firstLPGtank = lpgExpenses.stream()
+                            .sorted(Comparator.comparing(FuelExpense::getMilage))
+                            .collect(Collectors.toList())
+                            .get(0);
+
+                    carMilage = firstLPGtank.getMilage();
+
+                    tankSum -= firstLPGtank.getLitres();
+                }
+
+                float distSum = lpgExpenses.get(0).getMilage()-carMilage;
 
                 float lastLPG = calcLastFuelCons(lpgExpenses.get(1).getLevel(), lpgExpenses.get(0).getLevel(), lpgExpenses.get(0).getLitres(),
                         lpgExpenses.get(1).getMilage(), lpgExpenses.get(0).getMilage());

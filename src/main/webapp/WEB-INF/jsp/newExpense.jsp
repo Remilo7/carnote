@@ -67,7 +67,7 @@
                             <form:input type="date" name="date" path="date" required="required" />
                             <span class="highlight"></span>
                             <span class="bar"></span>
-                            <label>Date (DD.MM.RRRR)</label>
+                            <label>Date (RRRR-MM-DD)</label>
                         </div>
 
                         <div class="group">

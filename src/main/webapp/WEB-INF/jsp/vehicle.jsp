@@ -182,7 +182,7 @@
             <div class="row p-0">
                 <div class="col-sm-12 d-flex justify-content-between p-0">
                     <a href="index"><button class="btn btn-dark bottom-zero">Go back</button></a>
-                    <button class="btn btn-danger bottom-zero" data-toggle="modal" data-target="#deleteModal">Delete car</button>
+                    <button class="btn btn-primary bottom-zero" data-toggle="modal" data-target="#editCarModal">Edit vehicle</button>
                 </div>
             </div>
         </div>
@@ -209,11 +209,29 @@
     </div>
 </div>
 
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="editCarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLongTitle">Confirm deleting your vehicle with all its data</h5>
+                <h5 class="modal-title" id="deleteModalLongTitle">What would you like to do with your vehicle?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body d-flex justify-content-between">
+                <button type="button" class="btn btn-dark" data-dismiss="modal">Cancel</button>
+                <a href="editVehiclePage?vId=${vehicle.id}"><button class="btn btn-primary">Edit data</button></a>
+                <button class="btn btn-danger" data-toggle="modal" data-target="#deleteCarModal">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteCarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirm deletion of the vehicle</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

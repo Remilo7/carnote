@@ -1,5 +1,5 @@
 function fuelChange(that) {
-    if (that.value == 3) {
+    if ((that.value == 3) || (that == 3)) {
         document.getElementById("lpg-cap").style.display = "block";
         document.getElementById("lpg-lev").style.display = "block";
         document.getElementById("lpg-spacer").style.display = "block";
