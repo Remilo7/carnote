@@ -68,6 +68,7 @@
                             <div class="input-spacer"></div>
 
                             <!-- Login Form -->
+
                             <form action="${pageContext.request.contextPath}/j_spring_security_check" method='POST'>
                                 <input type="text" class="fadeIn first" name="username" placeholder="Username">
                                 <input type="password" class="fadeIn second" name="password" placeholder="Password">
@@ -101,6 +102,7 @@
                             <div class="input-spacer"></div>
 
                             <!-- Register Form -->
+
                             <form:form name="registrationForm" action="addUser" method="post" modelAttribute="user" onsubmit="return validateForm()">
 
                                 <form:input type="text" path="username" class="fadeIn first" name="username" placeholder="Username" />
@@ -139,6 +141,8 @@
 </div>
 
 <script type="text/javascript" src="<c:url value="/resources/static/js/loginForm.js" />"> </script>
+
+<%-- PWA --%>
 
 <script>
     // sprawdzamy czy przeglądarka posiada wsparcie dla service workera

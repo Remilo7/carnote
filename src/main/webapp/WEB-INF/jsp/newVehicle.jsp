@@ -33,6 +33,8 @@
                 </div>
             </div>
 
+            <%-- New vehicle form--%>
+
             <div class="row">
                 <div class="col-sm-12 form-wrapper">
                     <form:form name="vehicleForm" action="addVehicle" method="post" onsubmit="return validateForm()" modelAttribute="vehicle">

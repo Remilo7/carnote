@@ -33,6 +33,8 @@
                 </div>
             </div>
 
+            <%-- Edit fuel expense form--%>
+
             <div class="row">
                 <div class="col-sm-12 form-wrapper">
                     <form:form name="fuelExpenseForm" action="updateFuelExpense" method="post" onsubmit="return validateForm()" modelAttribute="expense">

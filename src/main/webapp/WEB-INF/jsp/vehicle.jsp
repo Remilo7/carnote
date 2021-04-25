@@ -192,6 +192,8 @@
 
 <%-- Modals --%>
 
+<%-- New fuel expense --%>
+
 <div class="modal fade" id="fuelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -208,6 +210,8 @@
         </div>
     </div>
 </div>
+
+<%-- Edit vehicle data --%>
 
 <div class="modal fade" id="editCarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -227,6 +231,8 @@
     </div>
 </div>
 
+<%-- Vehicle deletion confirmation --%>
+
 <div class="modal fade" id="deleteCarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -243,6 +249,8 @@
         </div>
     </div>
 </div>
+
+<%-- Import data from .xlsx --%>
 
 <div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">

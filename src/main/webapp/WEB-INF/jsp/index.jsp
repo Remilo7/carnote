@@ -108,6 +108,8 @@
 
 <%-- Modals --%>
 
+<%-- Settings modal --%>
+
 <div class="modal fade" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -126,6 +128,8 @@
 
 <script type="text/javascript" src="<c:url value="https://code.jquery.com/jquery-3.2.1.slim.min.js" />"></script>
 <script type="text/javascript" src="<c:url value="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" />"></script>
+
+<%-- PWA --%>
 
 <script>
     // sprawdzamy czy przeglądarka posiada wsparcie dla service workera

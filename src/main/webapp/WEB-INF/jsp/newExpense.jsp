@@ -33,6 +33,8 @@
                 </div>
             </div>
 
+            <%-- New expense form--%>
+
             <div class="row">
                 <div class="col-sm-12 form-wrapper">
                     <form:form name="expenseForm" action="addExpense" method="post" onsubmit="return validateForm()" modelAttribute="expense">

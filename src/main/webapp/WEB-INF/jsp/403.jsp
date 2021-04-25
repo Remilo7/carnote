@@ -11,8 +11,6 @@
     <meta http-equiv="refresh" content="4;url=index" />
     <meta name="theme-color" content="#016188">
 
-
-
     <title>403</title>
 
     <link href="<c:url value="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />" rel="stylesheet">
