@@ -148,6 +148,13 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- Heroku -->
+        <dependency>
+            <groupId>io.github.createam-labs</groupId>
+            <artifactId>spring-boot-starter-heroku</artifactId>
+            <version>1.1</version>
+        </dependency>
+
     </dependencies>
 
     <build>
