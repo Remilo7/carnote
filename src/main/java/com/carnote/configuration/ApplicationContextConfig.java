@@ -45,8 +45,8 @@ public class ApplicationContextConfig {
         // See: datasouce-cfg.properties
         dataSource.setDriverClassName(env.getProperty("ds.database-driver"));
         dataSource.setUrl(env.getProperty("ds.url"));
-        dataSource.setUsername(env.getProperty("ds.username"));
-        dataSource.setPassword(env.getProperty("ds.password"));
+        dataSource.setUsername(System.getenv("CLEARDB_DATABASE_USERNAME"));
+        dataSource.setPassword(System.getenv("CLEARDB_DATABASE_PASSWORD"));
 
         System.out.println("## getDataSource: " + dataSource);
 
