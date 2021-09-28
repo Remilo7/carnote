@@ -15,6 +15,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
+import javax.servlet.Filter;
 import javax.sql.DataSource;
 import java.util.Properties;
 
@@ -91,5 +92,10 @@ public class ApplicationContextConfig {
                 "hibernate.connection.useUnicode", "true");
 
         return hibernateProperties;
+    }
+
+    @Bean
+    public Filter httpsEnforcerFilter(){
+        return new HttpsEnforcer();
     }
 }
