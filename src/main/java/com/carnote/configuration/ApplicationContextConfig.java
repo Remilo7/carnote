@@ -93,9 +93,4 @@ public class ApplicationContextConfig {
 
         return hibernateProperties;
     }
-
-    @Bean
-    public Filter httpsEnforcerFilter(){
-        return new HttpsEnforcer();
-    }
 }
