@@ -96,8 +96,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and();
 
         // Force HTTPS usage
-        http.requiresChannel()
-                .requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
-                .requiresSecure();
+//        http.requiresChannel()
+//                .requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
+//                .requiresSecure();
     }
 }
