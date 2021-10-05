@@ -59,10 +59,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.csrf().disable();
 
-        http.requiresChannel()
-                .requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
-                .requiresSecure();
-
         // The pages does not require login
         http.authorizeRequests().antMatchers("/login").permitAll();
 

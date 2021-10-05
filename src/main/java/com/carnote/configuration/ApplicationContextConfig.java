@@ -78,6 +78,11 @@ public class ApplicationContextConfig {
         return new CommonsMultipartResolver();
     }
 
+    @Bean
+    public Filter httpsEnforcerFilter(){
+        return new HttpsEnforcer();
+    }
+
     private final Properties hibernateProperties() {
         Properties hibernateProperties = new Properties();
         hibernateProperties.setProperty(
