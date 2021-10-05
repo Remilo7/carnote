@@ -17,14 +17,16 @@ public class HttpsEnforcer implements Filter {
     }
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
+                         FilterChain filterChain) throws IOException, ServletException {
 
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
         if (request.getHeader(X_FORWARDED_PROTO) != null) {
             if (request.getHeader(X_FORWARDED_PROTO).indexOf("https") != 0) {
-                response.sendRedirect("https://" + request.getServerName() + request.getPathInfo());
+                String pathInfo = (request.getPathInfo() != null) ? request.getPathInfo() : "";
+                response.sendRedirect("https://" + request.getServerName() + pathInfo);
                 return;
             }
         }
