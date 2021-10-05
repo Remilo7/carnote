@@ -92,7 +92,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // Config for Remember Me
                 .and().rememberMe().key("uniqueAndSecret");
 
-        http.headers().frameOptions().sameOrigin()
-                .and();
+        http.requiresChannel()
+                .requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
+                .requiresSecure();
     }
 }
