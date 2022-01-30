@@ -67,27 +67,29 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.csrf().disable();
 
-        http.authorizeRequests()
-                // The pages does not require login
-                .antMatchers("/resources/static/**").permitAll()
-                // For USER only.
-                .antMatchers("/**").access("hasRole('USER')")
-                // Config for Login Form
-                .and()
-                    .formLogin()
-                        .loginPage("/login").permitAll()
-                        .defaultSuccessUrl("/")
-                        .failureUrl("/login?error=true")
-                        .usernameParameter("username")
-                        .passwordParameter("password")
-                .and()
-                    .exceptionHandling().accessDeniedPage("/403")
+        // The pages does not require login
+        http.authorizeRequests().antMatchers("/resources/static/**").permitAll();
+
+        // For USER only.
+        http.authorizeRequests().antMatchers("/**").access("hasRole('USER')");
+
+        // When the user has logged in as XX.
+        // But access a page that requires role YY,
+        // AccessDeniedException will throw.
+        http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
+
+        // Config for Login Form
+        http.authorizeRequests().and().formLogin()
+                // Submit URL of login page.
+                .loginProcessingUrl("/j_spring_security_check")
+                .loginPage("/login").permitAll()
+                .defaultSuccessUrl("/")
+                .failureUrl("/login?error=true")
+                .usernameParameter("username")
+                .passwordParameter("password")
                 // Config for Logout Page
-                .and()
-                    .logout().logoutUrl("/logout")
-                    .logoutSuccessUrl("/index")
+                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/login")
                 // Config for Remember Me
-                .and()
-                    .rememberMe().key("uniqueAndSecret");
+                .and().rememberMe().key("uniqueAndSecret");
     }
 }
