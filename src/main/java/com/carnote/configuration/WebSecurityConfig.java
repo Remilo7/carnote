@@ -18,7 +18,6 @@ import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import javax.servlet.Filter;
 
 @Configuration
-// @EnableWebSecurity = @EnableWebMVCSecurity + Extra features
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -82,7 +81,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // Config for Login Form
         http.authorizeRequests().and().formLogin()
                 // Submit URL of login page.
-                //.loginProcessingUrl("/j_spring_security_check") // Submit URL
+                .loginProcessingUrl("/j_spring_security_check") // Submit URL
                 .loginPage("/login").permitAll()
                 .defaultSuccessUrl("/")
                 .failureUrl("/login?error=true")
