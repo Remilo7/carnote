@@ -61,8 +61,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.csrf().disable();
 
+        // The pages does not require login
+        http.authorizeRequests().antMatchers("/login").permitAll();
+
         // For USER only.
-        http.authorizeRequests().antMatchers("/**").access("hasRole('USER')");
+        http.authorizeRequests().antMatchers("/", "/index", "/vehicle", "/newVehicle", "/newExpense", "newFuelExpense",
+                "/fuelExpense", "/expense", "/editExpense", "/editFuelExpense").access("hasRole('USER')");
 
         // When the user has logged in as XX.
         // But access a page that requires role YY,
@@ -73,7 +77,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().and().formLogin()
                 // Submit URL of login page.
                 .loginProcessingUrl("/j_spring_security_check") // Submit URL
-                .loginPage("/login").permitAll()
+                .loginPage("/login")
                 .defaultSuccessUrl("/")
                 .failureUrl("/login?error=true")
                 .usernameParameter("username")
@@ -82,9 +86,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().logout().logoutUrl("/logout").logoutSuccessUrl("/index")
                 // Config for Remember Me
                 .and().rememberMe().key("uniqueAndSecret");
-
-        http.headers().frameOptions().sameOrigin()
-                .and();
 
         // Https usage
         http.addFilterBefore(new IsSecureFilter(), ChannelProcessingFilter.class);
