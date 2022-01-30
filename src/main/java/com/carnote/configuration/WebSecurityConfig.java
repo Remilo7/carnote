@@ -62,9 +62,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.
                 csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/**").access("hasRole('USER')")
-                .antMatchers("/resources/static/**", "/login").permitAll()
-                .and().formLogin()
+                .antMatchers("/**").hasRole("USER")
+                .antMatchers("/login").permitAll()
+                .and()
+                .formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/j_spring_security_check")
                 .defaultSuccessUrl("/index")
