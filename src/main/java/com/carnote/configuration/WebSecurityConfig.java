@@ -59,31 +59,39 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
 
-        http.csrf().disable();
-
-        // The pages does not require login
-        http.authorizeRequests().antMatchers("/resources/static/**").permitAll();
-
-        // For USER only.
-        http.authorizeRequests().antMatchers("/**").access("hasRole('USER')");
-
-        // When the user has logged in as XX.
-        // But access a page that requires role YY,
-        // AccessDeniedException will throw.
-        http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
+        http.
+                csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/**").access("hasRole('USER')")
+                .antMatchers("/resources/static/**", "/login*").permitAll()
+                .and().formLogin()
+                .loginPage("/login")
+                .loginProcessingUrl("/j_spring_security_check")
+                .defaultSuccessUrl("/index")
+                .failureUrl("/login?error=true")
+                .and()
+                .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login")
+                .and()
+                .exceptionHandling()
+                .accessDeniedPage("/403")
+                .and()
+                .rememberMe()
+                .key("uniqueAndSecret");
 
         // Config for Login Form
-        http.authorizeRequests().and().formLogin()
-                // Submit URL of login page.
-                .loginProcessingUrl("/j_spring_security_check")
-                .loginPage("/login").permitAll()
-                .defaultSuccessUrl("/")
-                .failureUrl("/login?error=true")
-                .usernameParameter("username")
-                .passwordParameter("password")
-                // Config for Logout Page
-                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/login")
-                // Config for Remember Me
-                .and().rememberMe().key("uniqueAndSecret");
+//        http.authorizeRequests().and().formLogin()
+//                // Submit URL of login page.
+//                .loginProcessingUrl("/j_spring_security_check")
+//                .loginPage("/login").permitAll()
+//                .defaultSuccessUrl("/")
+//                .failureUrl("/login?error=true")
+//                .usernameParameter("username")
+//                .passwordParameter("password")
+//                // Config for Logout Page
+//                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/login")
+//                // Config for Remember Me
+//                .and().rememberMe().key("uniqueAndSecret");
     }
 }
