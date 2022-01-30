@@ -83,6 +83,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // Config for Remember Me
                 .and().rememberMe().key("uniqueAndSecret");
 
+        http.headers().frameOptions().sameOrigin()
+                .and();
+
         // Https usage
         http.addFilterBefore(new IsSecureFilter(), ChannelProcessingFilter.class);
 
