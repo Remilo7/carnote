@@ -62,7 +62,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
 
         // The pages does not require login
-        http.authorizeRequests().antMatchers("/login", "/resources/static/**").permitAll();
+        http.authorizeRequests().antMatchers("/resources/static/**").permitAll();
 
         // For USER only.
         http.authorizeRequests().antMatchers("/**").access("hasRole('USER')");
@@ -76,7 +76,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().and().formLogin()
                 // Submit URL of login page.
                 .loginProcessingUrl("/j_spring_security_check") // Submit URL
-                .loginPage("/login")
+                .loginPage("/login").permitAll()
                 .defaultSuccessUrl("/")
                 .failureUrl("/login?error=true")
                 .usernameParameter("username")
@@ -87,11 +87,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().rememberMe().key("uniqueAndSecret");
 
         // Https usage
-        //http.addFilterBefore(new IsSecureFilter(), ChannelProcessingFilter.class);
+        http.addFilterBefore(new IsSecureFilter(), ChannelProcessingFilter.class);
 
-        http.requiresChannel()
-                .requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
-                .requiresSecure();
+//        http.requiresChannel()
+//                .requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
+//                .requiresSecure();
 
     }
 }
