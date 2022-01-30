@@ -62,7 +62,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
 
         // The pages does not require login
-        http.authorizeRequests().antMatchers("/login").permitAll();
+        http.authorizeRequests().antMatchers("/login", "/resources/static/**").permitAll();
 
         // For USER only.
         http.authorizeRequests().antMatchers("/", "/index", "/vehicle", "/newVehicle", "/newExpense", "newFuelExpense",
@@ -88,7 +88,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().rememberMe().key("uniqueAndSecret");
 
         // Https usage
-        http.addFilterBefore(new IsSecureFilter(), ChannelProcessingFilter.class);
+        //http.addFilterBefore(new IsSecureFilter(), ChannelProcessingFilter.class);
+
+        http.requiresChannel()
+                .requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
+                .requiresSecure();
 
     }
 }
