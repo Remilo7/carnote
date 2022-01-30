@@ -65,8 +65,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/login", "/resources/static/**").permitAll();
 
         // For USER only.
-        http.authorizeRequests().antMatchers("/", "/index", "/vehicle", "/newVehicle", "/newExpense", "newFuelExpense",
-                "/fuelExpense", "/expense", "/editExpense", "/editFuelExpense").access("hasRole('USER')");
+        http.authorizeRequests().antMatchers("/**").access("hasRole('USER')");
 
         // When the user has logged in as XX.
         // But access a page that requires role YY,
