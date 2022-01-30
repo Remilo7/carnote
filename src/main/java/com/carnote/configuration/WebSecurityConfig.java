@@ -1,7 +1,6 @@
 package com.carnote.configuration;
 
 import com.carnote.authentication.MyDBAuthenticationService;
-import com.carnote.configuration.https.HttpsEnforcer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -43,11 +42,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         authProvider.setPasswordEncoder(passwordEncoder());
 
         return authProvider;
-    }
-
-    @Bean
-    public Filter httpsEnforcerFilter(){
-        return new HttpsEnforcer();
     }
 
     @Autowired
