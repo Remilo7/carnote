@@ -1,7 +1,7 @@
 package com.carnote.configuration;
 
 import com.carnote.authentication.MyDBAuthenticationService;
-import com.carnote.configuration.https.IsSecureFilter;
+import com.carnote.configuration.https.HttpsEnforcer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +14,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.access.channel.ChannelProcessingFilter;
+
+import javax.servlet.Filter;
 
 @Configuration
 // @EnableWebSecurity = @EnableWebMVCSecurity + Extra features
@@ -42,6 +44,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         authProvider.setPasswordEncoder(passwordEncoder());
 
         return authProvider;
+    }
+
+    @Bean
+    public Filter httpsEnforcerFilter(){
+        return new HttpsEnforcer();
     }
 
     @Autowired
@@ -85,13 +92,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().logout().logoutUrl("/logout").logoutSuccessUrl("/index")
                 // Config for Remember Me
                 .and().rememberMe().key("uniqueAndSecret");
-
-        // Https usage
-        //http.addFilterBefore(new IsSecureFilter(), ChannelProcessingFilter.class);
-
-//        http.requiresChannel()
-//                .requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
-//                .requiresSecure();
-
     }
 }
