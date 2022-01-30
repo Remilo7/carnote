@@ -38,7 +38,7 @@
     <link rel="apple-touch-icon" sizes="76x76" href="<c:url value="/resources/static/img/icons/76.png" />">
     <link rel="apple-touch-icon" sizes="96x96" href="<c:url value="/resources/static/img/icons/96.png" />">
     <link rel="apple-touch-icon" sizes="120x120" href="<c:url value="/resources/static/img/icons/120.png" />">
-    <link rel="apple-touch-icon" sizes="512x512" href="<c:url value="/resources/static/img/icons/512.png" />">2
+    <link rel="apple-touch-icon" sizes="512x512" href="<c:url value="/resources/static/img/icons/512.png" />">
 
 </head>
 <body

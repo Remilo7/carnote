@@ -98,5 +98,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and();
 
         http.addFilterBefore(new IsSecureFilter(), ChannelProcessingFilter.class);
+
+        http.requiresChannel()
+                .requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
+                .requiresSecure();
     }
 }
