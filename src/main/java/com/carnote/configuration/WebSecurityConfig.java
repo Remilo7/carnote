@@ -61,11 +61,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.csrf().disable();
 
-        // For USER only.
-        http.authorizeRequests().antMatchers("/**").hasRole("USER");
-
         // The pages does not require login
         http.authorizeRequests().antMatchers("/login", "/resources/static/**").permitAll();
+
+        // For USER only.
+        http.authorizeRequests().antMatchers("/**").hasRole("USER");
 
         // When the user has logged in as XX.
         // But access a page that requires role YY,
