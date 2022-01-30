@@ -28,7 +28,7 @@ public class IsSecureFilter extends GenericFilterBean {
         System.out.println("[DEBUG] : port FILTER :: " + port);
         System.out.println("[DEBUG] : URL :: " + req.getRequestURL());
         String url = req.getRequestURL().toString().toLowerCase();
-        if (url.endsWith("/login") && url.startsWith("http:") && port == 8080) {
+        if (url.startsWith("http:") && port == 8080) {
             url = url.replace("http:", "https:");
             String queries = req.getQueryString();
             if (queries == null) {
