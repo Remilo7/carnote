@@ -59,28 +59,31 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
 
-        http.
-                csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/**").hasRole("USER")
-                .antMatchers("/login").permitAll()
-                .and()
-                .formLogin()
-                .loginProcessingUrl("/j_spring_security_check")
+        http.csrf().disable();
+
+        // For USER only.
+        http.authorizeRequests().antMatchers("/**").hasRole("USER");
+
+        // The pages does not require login
+        http.authorizeRequests().antMatchers("/login", "/resources/static/**").permitAll();
+
+        // When the user has logged in as XX.
+        // But access a page that requires role YY,
+        // AccessDeniedException will throw.
+        http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
+
+        // Config for Login Form
+        http.authorizeRequests().and().formLogin()
+                // Submit URL of login page.
+                .loginProcessingUrl("/j_spring_security_check") // Submit URL
                 .loginPage("/login")
-                .defaultSuccessUrl("/index")
+                .defaultSuccessUrl("/")
                 .failureUrl("/login?error=true")
                 .usernameParameter("username")
                 .passwordParameter("password")
-                .and()
-                .logout()
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/login")
-                .and()
-                .exceptionHandling()
-                .accessDeniedPage("/403")
-                .and()
-                .rememberMe()
-                .key("uniqueAndSecret");
+                // Config for Logout Page
+                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/index")
+                // Config for Remember Me
+                .and().rememberMe().key("uniqueAndSecret");
     }
 }
