@@ -87,7 +87,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().rememberMe().key("uniqueAndSecret");
 
         // Https usage
-        http.addFilterBefore(new IsSecureFilter(), ChannelProcessingFilter.class);
+        //http.addFilterBefore(new IsSecureFilter(), ChannelProcessingFilter.class);
 
 //        http.requiresChannel()
 //                .requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
