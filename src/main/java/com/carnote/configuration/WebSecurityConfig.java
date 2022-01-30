@@ -61,19 +61,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.csrf().disable();
 
-        // The pages does not require login
-        http.authorizeRequests().antMatchers("/login").permitAll();
-
-        // /userInfo page requires login as USER or ADMIN.
-        // If no login, it will redirect to /login page.
-        //http.authorizeRequests().antMatchers("/userInfo", "panel").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')");
-
-        // For ADMIN only.
-        // http.authorizeRequests().antMatchers("/adminPanel").access("hasRole('ADMIN')");
-
         // For USER only.
-        http.authorizeRequests().antMatchers("/", "/index", "/vehicle", "/newVehicle", "/newExpense", "newFuelExpense",
-                 "/fuelExpense", "/expense", "/editExpense", "/editFuelExpense").access("hasRole('USER')");
+        http.authorizeRequests().antMatchers("/**").access("hasRole('USER')");
 
         // When the user has logged in as XX.
         // But access a page that requires role YY,
@@ -81,13 +70,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
 
         // Config for Login Form
-        http.authorizeRequests().and().formLogin()//
+        http.authorizeRequests().and().formLogin()
                 // Submit URL of login page.
                 .loginProcessingUrl("/j_spring_security_check") // Submit URL
-                .loginPage("/login")//
-                .defaultSuccessUrl("/")//
-                .failureUrl("/login?error=true")//
-                .usernameParameter("username")//
+                .loginPage("/login").permitAll()
+                .defaultSuccessUrl("/")
+                .failureUrl("/login?error=true")
+                .usernameParameter("username")
                 .passwordParameter("password")
                 // Config for Logout Page
                 .and().logout().logoutUrl("/logout").logoutSuccessUrl("/index")
@@ -98,6 +87,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and();
 
         // Https usage
-        http.addFilterBefore(new IsSecureFilter(), ChannelProcessingFilter.class);
+        //http.addFilterBefore(new IsSecureFilter(), ChannelProcessingFilter.class);
+
+        http.requiresChannel()
+                .requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
+                .requiresSecure();
     }
 }
